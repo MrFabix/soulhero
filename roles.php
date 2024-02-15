@@ -51,7 +51,7 @@ include("include/config.php");
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
 
         <?php
-        $sql = "SELECT * FROM class order by nome";
+        $sql = "SELECT * FROM roles ORDER BY nome";
         $result = mysqli_query($link, $sql);
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
@@ -59,24 +59,46 @@ include("include/config.php");
 
 
                 <div class="col">
-                    <a href="/classe.php?id=<?php echo $row["id"]?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Anteprima">
-                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg zoom-on-hover draggable-card" style="background-image: url('img/classes/<?php echo $row["img"] ?>'); background-size: cover;">
-                            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold "><?php echo $row["nome"]; ?></h3>
-                                <ul class="d-flex list-unstyled mt-auto">
-                                    <li class="me-auto"></li>
-                                    <li class="d-flex align-items-center me-3 ">
-                                        <i class="bi bi-person "></i>
-                                        <small><?php echo $row["nome"]; ?></small>
-                                    </li>
-                                    <li class="d-flex align-items-center">
-                                        <i class="bi bi-heart-fill"></i>
-                                        <small class="text-danger">HP <?php echo $row["hp"]; ?> </small>
-                                    </li>
-                                </ul>
+                        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg zoom-on-hover " >
+                                <div class="card-header">
+                                <h3 class="card-title display-6 lh-1 fw-bold "><?php echo $row["nome"]; ?></h3>
+                                </div>
+                            <div class="card-body p-4">
+                                <table class="table table-striped ">
+                                    <thead>
+
+                                    <tr>
+                                        <td>Nome</td>
+                                        <td>Descrizione</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                <?php
+                                    $sql2 = "SELECT * FROM roles_bonus WHERE fk_role = " . $row["id_role"];
+                                    $result2 = mysqli_query($link, $sql2);
+                                    if (mysqli_num_rows($result2) > 0) {
+                                        while($row2 = mysqli_fetch_assoc($result2)) {
+                                            ?>
+                                            <tr>
+                                                <td class="fw-bold"><?php echo $row2["nome"]; ?></td>
+                                                <td><?php echo $row2["descrizione"]; ?></td>
+                                            </tr>
+
+
+
+
+                                            <?php
+                                        }
+                                    }
+                                ?>
+                                    </tbody>
+                                </table>
+
+
                             </div>
+
+
                         </div>
-                    </a>
                 </div>
                 <?php
             }
