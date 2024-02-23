@@ -38,6 +38,8 @@ $url = $_SERVER['REQUEST_URI'];
                 <li><a href="/magic.php" class="nav-link px-2 <?php if ($url == "/magic.php") {echo "text-secondary";} else {echo "text-white";} ?>">Spells</a></li>
                 <li><a href="/items.php" class="nav-link px-2 <?php if ($url == "/items.php") {echo "text-secondary";} else {echo "text-white";} ?>">Items</a></li>
                 <li><a href="/monsters.php" class="nav-link px-2 <?php if ($url == "/monsters.php") {echo "text-secondary";} else {echo "text-white";} ?>">Monsters</a></li>
+                <li><a href="/sheet.php" class="nav-link px-2 <?php if ($url == "/sheet.php") {echo "text-secondary";} else {echo "text-white";} ?>">Sheet</a></li>
+
 
             </ul>
 
@@ -53,6 +55,7 @@ $url = $_SERVER['REQUEST_URI'];
         </div>
     </div>
 </header>
+
 
 <!-- <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
