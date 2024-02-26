@@ -1,6 +1,5 @@
 <style>
     body {
-        padding-bottom: 80px; /* Adjust this value according to the height of your footer */
     }
 
     .footer {
@@ -36,9 +35,21 @@ $url = $_SERVER['REQUEST_URI'];
                 <li><a href="/classes.php" class="nav-link px-2 <?php if ($url == "/classes.php") {echo "text-secondary";} else {echo "text-white";} ?>">Classes</a></li>
                 <li><a href="/roles.php" class="nav-link px-2 <?php if ($url == "/roles.php") {echo "text-secondary";} else {echo "text-white";} ?>">Roles</a></li>
                 <li><a href="/magic.php" class="nav-link px-2 <?php if ($url == "/magic.php") {echo "text-secondary";} else {echo "text-white";} ?>">Spells</a></li>
-                <li><a href="/items.php" class="nav-link px-2 <?php if ($url == "/items.php") {echo "text-secondary";} else {echo "text-white";} ?>">Items</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Crafting
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/crafting.php?type=1">Crafting Alchemical</a></li>
+                        <li><a class="dropdown-item" href="/crafting.php?type=2">Crafting Cooking</a></li>
+                        <li><a class="dropdown-item" href="/crafting.php?type=3">Crafting Magical</a></li>
+
+
+                    </ul>
+                </li>
                 <li><a href="/monsters.php" class="nav-link px-2 <?php if ($url == "/monsters.php") {echo "text-secondary";} else {echo "text-white";} ?>">Monsters</a></li>
                 <li><a href="/sheet.php" class="nav-link px-2 <?php if ($url == "/sheet.php") {echo "text-secondary";} else {echo "text-white";} ?>">Sheet</a></li>
+                <li><a href="/test.php" class="nav-link px-2 <?php if ($url == "/test.php") {echo "text-secondary";} else {echo "text-white";} ?>">test</a></li>
 
 
             </ul>
