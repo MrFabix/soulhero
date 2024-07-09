@@ -48,8 +48,20 @@ $url = $_SERVER['REQUEST_URI'];
                     </ul>
                 </li>
                 <li><a href="/monsters.php" class="nav-link px-2 <?php if ($url == "/monsters.php") {echo "text-secondary";} else {echo "text-white";} ?>">Monsters</a></li>
-                <li><a href="/sheet.php" class="nav-link px-2 <?php if ($url == "/sheet.php") {echo "text-secondary";} else {echo "text-white";} ?>">Sheet</a></li>
-                <li><a href="/test.php" class="nav-link px-2 <?php if ($url == "/test.php") {echo "text-secondary";} else {echo "text-white";} ?>">test</a></li>
+                    <li><a  href="/sheet.php" class="nav-link px-2 disabled <?php if ($url == "/sheet.php") {echo "text-secondary";} else {echo "text-white";} ?>">Sheet</a></li>
+
+                <!--ADMIN-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/admin/new_role.php">New Role</a></li>
+                            <li><a class="dropdown-item" href="/admin/new_class.php">New Class</a></li>
+                            <li><a class="dropdown-item" href="/admin/new_ancestry.php">New Ancestry</a></li>
+                        </ul>
+                    </li>
+
 
 
             </ul>
