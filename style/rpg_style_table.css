@@ -1,0 +1,60 @@
+/* Sfondo e container centrale */
+body {
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Cinzel', serif;
+    color: #f4f4f4;
+}
+
+.rpg-container {
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid gold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #f4f4f4;
+}
+
+/* Titolo RPG */
+.rpg-title {
+    font-family: 'Uncial Antiqua', serif;
+    color: #f7d794;
+    text-shadow: 2px 2px 8px #000;
+}
+
+/* Tabella in stile fantasy */
+.rpg-table {
+    background-color: rgba(46, 45, 45, 0.7);
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid #d4af37;
+    border-radius: 15px;
+}
+
+.rpg-table thead th {
+    background-color: #d4af37;
+    color: #2e2727;
+    font-family: 'Cinzel', serif;
+}
+
+.rpg-table tbody td {
+    color: #f4f4f4;
+    border-top: 1px solid #d4af37;
+}
+
+.rpg-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Pulsanti di Dettaglio */
+.btn-outline-light {
+    border-color: #f7d794;
+    color: #f7d794;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+}
+
+.btn-outline-light:hover {
+    background-color: #f7d794;
+    color: #000;
+}

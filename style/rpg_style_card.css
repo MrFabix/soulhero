@@ -1,0 +1,66 @@
+
+
+
+/* Imposta lo stile solo all'interno del contenitore rpg-ancestries-page */
+.rpg-ancestries-page {
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid gold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.rpg-ancestries-page h1 {
+    font-family: 'Uncial Antiqua', serif;
+    color: #f7d794;
+    text-shadow: 2px 2px 8px #000;
+    margin-bottom: 40px;
+}
+
+/* Stile per le card delle ancestries */
+.rpg-ancestries-page .rpg-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid #d4af37;
+    color: #f4f4f4;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.rpg-ancestries-page .rpg-card .card-title {
+    font-family: 'Uncial Antiqua', serif;
+    font-size: 1.4rem;
+    color: #f7d794;
+    text-shadow: 1px 1px 4px #000;
+    margin-bottom: 20px;
+}
+
+.rpg-ancestries-page .rpg-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+}
+
+.rpg-ancestries-page .rpg-card .card-text,
+.rpg-ancestries-page .rpg-card p {
+    font-family: 'Cinzel', serif;
+    color: #f4f4f4;
+    margin-bottom: 10px;
+}
+
+/* Bordi dorati per i titoli di sezione */
+.rpg-ancestries-page .rpg-card strong {
+    color: #d4af37;
+}
+
+/* Pulsanti nella card (opzionale) */
+.rpg-ancestries-page .btn-outline-light {
+    border-color: #f7d794;
+    color: #f7d794;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.rpg-ancestries-page .btn-outline-light:hover {
+    background-color: #f7d794;
+    color: #000;
+}

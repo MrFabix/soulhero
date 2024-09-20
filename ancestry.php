@@ -1,7 +1,7 @@
 <?php
 include("include/config.php");
 
-$sql = "SELECT * FROM roles";
+$sql = "SELECT * FROM Ancestries";
 $result = $link->query($sql);
 ?>
 
@@ -10,7 +10,7 @@ $result = $link->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roles - RPG Database</title>
+    <title>Ancestries - RPG Database</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -46,45 +46,58 @@ $result = $link->query($sql);
 <body>
 
 <div class="container mt-5 rpg-ancestries-page">
-    <h1 class="text-center mb-4">Roles</h1>
+    <h1 class="text-center mb-4">Ancestries</h1>
 
     <!-- Campo di Ricerca -->
     <div class="row mb-4">
         <div class="col-12">
-            <input type="text" id="search-input" class="form-control" placeholder="Search Roles...">
+            <input type="text" id="search-input" class="form-control" placeholder="Search Ancestries...">
         </div>
     </div>
 
     <!-- Contenitore per le Cards (Griglia Isotope) -->
-    <div class="row isotope-grid" id="roles-grid">
+    <div class="row isotope-grid" id="ancestries-grid">
         <?php if ($result->num_rows > 0): ?>
             <?php while($row = $result->fetch_assoc()): ?>
                 <div class="col-md-4 mb-4 isotope-item">
                     <div class="card h-100 rpg-card">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $row['nome']; ?></h5>
-                            <p><strong>Bonuses:</strong></p>
-                            <ul>
+                            <h5 class="card-title"><?php echo $row['nome_stirpe']; ?></h5>
+                            <p class="card-text"><?php echo $row['descrizione']; ?></p>
+                            <p><strong>Bonus Stats:</strong>
                                 <?php
-                                // Recupera i bonus associati a questo ruolo
-                                $role_id = $row['id_role'];
-                                $sql_bonus = "SELECT * FROM roles_bonus WHERE fk_role = $role_id";
-                                $result_bonus = $link->query($sql_bonus);
-                                if ($result_bonus->num_rows > 0) {
-                                    while($row_bonus = $result_bonus->fetch_assoc()) {
-                                        echo "<li><strong>" . $row_bonus['nome'] . ":</strong> " . $row_bonus['descrizione'] . "</li>";
-                                    }
-                                } else {
-                                    echo "<li>No bonuses available for this role.</li>";
+                                $bonus_stats = json_decode($row['bonus_stat'], true);
+                                foreach ($bonus_stats as $stat => $value) {
+                                    echo ucfirst($stat) . ": " . $value . " ";
                                 }
                                 ?>
-                            </ul>
+                            </p>
+                            <p><strong>Penalties:</strong>
+                                <?php
+                                if ($row['penalità_stat']) {
+                                    $penalty_stats = json_decode($row['penalità_stat'], true);
+                                    foreach ($penalty_stats as $stat => $value) {
+                                        echo ucfirst($stat) . ": " . $value . " ";
+                                    }
+                                } else {
+                                    echo 'None';
+                                }
+                                ?>
+                            </p>
+                            <p><strong>Abilities:</strong>
+                                <?php
+                                $abilities = json_decode($row['abilità_speciali'], true);
+                                echo implode(", ", $abilities);
+                                ?>
+                            </p>
+                            <p><strong>Speed:</strong> <?php echo $row['velocità']; ?></p>
+                            <p><strong>Base Language:</strong> <?php echo $row['lingua_base']; ?></p>
                         </div>
                     </div>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p class="text-center">No roles found.</p>
+            <p class="text-center">No ancestries found.</p>
         <?php endif; ?>
     </div>
 </div>
@@ -96,9 +109,9 @@ $result = $link->query($sql);
 
 <!-- Isotope JS -->
 <script>
-    // Inizializza Isotope dopo il caricamento della pagina
+    // Inizializza Isotope
     var elem = document.querySelector('.isotope-grid');
-    var iso = new Isotope(elem, {
+    var iso = new Isotope( elem, {
         itemSelector: '.isotope-item',
         layoutMode: 'fitRows'
     });
@@ -109,9 +122,10 @@ $result = $link->query($sql);
         var filterValue = searchInput.value.toLowerCase();
         iso.arrange({
             filter: function(itemElem) {
-                var nomeRole = itemElem.querySelector('.card-title').textContent.toLowerCase();
-                // Filtra in base al nome del ruolo
-                return nomeRole.includes(filterValue);
+                var nomeStirpe = itemElem.querySelector('.card-title').textContent.toLowerCase();
+                var descrizione = itemElem.querySelector('.card-text').textContent.toLowerCase();
+                // Filtra in base al nome della stirpe e alla descrizione
+                return nomeStirpe.includes(filterValue) || descrizione.includes(filterValue);
             }
         });
     });
