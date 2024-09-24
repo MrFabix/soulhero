@@ -1,3 +1,18 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-lg {
+    flex-grow: 1;
+}
+
+
 /* Sfondo e container centrale */
 body {
     background-size: cover;

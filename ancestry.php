@@ -45,7 +45,7 @@ $result = $link->query($sql);
 
 <body>
 
-<div class="container mt-5 rpg-ancestries-page">
+<div class="container-lg	 mt-5 rpg-ancestries-page">
     <h1 class="text-center mb-4">Ancestries</h1>
 
     <!-- Campo di Ricerca -->
