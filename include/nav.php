@@ -35,22 +35,21 @@ $url = $_SERVER['REQUEST_URI'];
                 <li><a href="/ancestry.php" class="nav-link px-2 <?php if ($url == "/ancestry.php") {echo "text-secondary";} else {echo "text-white";} ?>">Ancestry</a></li>
                 <li><a href="/classes.php" class="nav-link px-2 <?php if ($url == "/classes.php") {echo "text-secondary";} else {echo "text-white";} ?>">Classes</a></li>
                 <li><a href="/roles.php" class="nav-link px-2 <?php if ($url == "/roles.php") {echo "text-secondary";} else {echo "text-white";} ?>">Roles</a></li>
-                <li><a href="/items.php" class="nav-link px-2 <?php if ($url == "/items.php") {echo "text-secondary";} else {echo "text-white";} ?>">Items</a></li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Crafting
+                        Weapons
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/crafting.php?type=1">Crafting Alchemical</a></li>
-                        <li><a class="dropdown-item" href="/crafting.php?type=2">Crafting Cooking</a></li>
-                        <li><a class="dropdown-item" href="/crafting.php?type=3">Crafting Magical</a></li>
-
-
+                        <li><a class="dropdown-item" href="/weapons.php">All Weapons</a></li>
+                        <li><a class="dropdown-item" href="/weapons.php?category=1">Unamerde</a></li>
+                        <li><a class="dropdown-item" href="/weapons.php?category=2">Single Handed</a></li>
+                        <li><a class="dropdown-item" href="/weapons.php?category=3">Two Handend</a></li>
+                        <li><a class="dropdown-item" href="/weapons.php?category=4">Firearms</a></li>
+                        <li><a class="dropdown-item" href="/weapons.php?category=5">Ranged</a></li>
                     </ul>
                 </li>
-                <li><a href="/monsters.php" class="nav-link px-2 <?php if ($url == "/monsters.php") {echo "text-secondary";} else {echo "text-white";} ?>">Monsters</a></li>
-                    <li><a  href="/sheet.php" class="nav-link px-2 disabled <?php if ($url == "/sheet.php") {echo "text-secondary";} else {echo "text-white";} ?>">Sheet</a></li>
+                <li><a href="/feats.php" class="nav-link px-2 <?php if ($url == "/feats.php") {echo "text-secondary";} else {echo "text-white";} ?>">Feats</a></li>
+
 
             </ul>
 

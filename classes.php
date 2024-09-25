@@ -43,9 +43,9 @@ $result = $link->query($sql);
 
 <?php include("include/nav.php"); ?>
 
-<body>
+<body class=" text-light">
 
-<div class="container-lg	 mt-5 rpg-ancestries-page">
+<div class="container-sm mt-5 rpg-ancestries-page">
     <h1 class="text-center mb-4">Classes</h1>
 
     <!-- Campo di Ricerca -->
@@ -59,26 +59,26 @@ $result = $link->query($sql);
     <div class="row isotope-grid" id="ancestries-grid">
         <?php if ($result->num_rows > 0): ?>
             <?php while($row = $result->fetch_assoc()): ?>
-                <div class="col-md-4 mb-4 isotope-item">
-                    <div class="card h-100 rpg-card">
+                <div class="col-3 isotope-item">
+                    <div class="card h-100 rpg-card mb-3">
                         <!-- Inserisci l'immagine in alto -->
-                        <img src="img/classes/cleric.jpg" class="card-img-top img-fluid" alt="<?php echo $row['name']; ?>">
                         <div class="card-body">
                             <!-- Nome e HP con allineamento e colore -->
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center ">
                                 <h5 class="card-title"><?php echo $row['name']; ?></h5>
                                 <span class="text-danger"> HP <?php echo $row['hp']; ?></span>
                             </div>
                             <p class="card-text"><?php echo $row['description']; ?></p>
-                            <!-- Bonus Stats -->
-                            <p><strong>NOME PERK : </strong> OGNI DUE MANA SPESI OTTIENI UNA CARTA IN PIU'</p>
+                            <!-- Aggiungi un link al dettaglio della classe -->
+                            <a href="class_details.php?id=<?php echo $row['id']; ?>" class="btn btn-outline-light">Scopri di più</a>
                         </div>
                     </div>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p class="text-center">No ancestries found.</p>
+            <p class="text-center">No classes found.</p>
         <?php endif; ?>
+
     </div>
 
 

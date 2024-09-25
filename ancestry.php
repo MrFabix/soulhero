@@ -59,7 +59,7 @@ $result = $link->query($sql);
     <div class="row isotope-grid" id="ancestries-grid">
         <?php if ($result->num_rows > 0): ?>
             <?php while($row = $result->fetch_assoc()): ?>
-                <div class="col-md-4 mb-4 isotope-item">
+                <div class="col-3 mb-3  isotope-item">
                     <div class="card h-100 rpg-card">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $row['nome_stirpe']; ?></h5>
@@ -92,6 +92,8 @@ $result = $link->query($sql);
                             </p>
                             <p><strong>Speed:</strong> <?php echo $row['velocità']; ?></p>
                             <p><strong>Base Language:</strong> <?php echo $row['lingua_base']; ?></p>
+                            <a  class="btn btn-outline-light disabled">Scopri di più</a>
+
                         </div>
                     </div>
                 </div>

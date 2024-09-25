@@ -1,7 +1,10 @@
 <?php
 include("include/config.php");
 
-$sql = "SELECT * FROM roles";
+$sql = "SELECT roles.id_role, roles.nome, roles.name_role_daily, roles.description_role_daily, statistics.name AS statistic_name, roles.boost_statistic, skill.name AS skill_name, roles.boost_skill
+ FROM roles 
+ JOIN statistics ON roles.fk_statistic = statistics.id 
+ JOIN skill ON roles.fk_skill = skill.id";
 $result = $link->query($sql);
 ?>
 
@@ -18,7 +21,7 @@ $result = $link->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Uncial+Antiqua&display=swap" rel="stylesheet">
-    <!-- Custom CSS specific to Ancestries page -->
+    <!-- Custom CSS specific to Roles page -->
     <link href="style/rpg_style_card.css" rel="stylesheet">
     <style>
         /* Imposta il font globale della pagina */
@@ -33,9 +36,28 @@ $result = $link->query($sql);
             color: #f7d794;
         }
 
+        /* Stile per le card dei ruoli */
+        .rpg-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid #d4af37;
+            color: #f4f4f4;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .rpg-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+        }
+
         /* Campo di ricerca */
         #search-input {
             font-family: 'Cinzel', serif;
+        }
+
+        /* Bordi dorati per i titoli di sezione */
+        strong {
+            color: #d4af37;
         }
 
     </style>
@@ -59,26 +81,24 @@ $result = $link->query($sql);
     <div class="row isotope-grid" id="roles-grid">
         <?php if ($result->num_rows > 0): ?>
             <?php while($row = $result->fetch_assoc()): ?>
-                <div class="col-md-4 mb-4 isotope-item">
+                <div class="col-3 mb-3  isotope-item">
                     <div class="card h-100 rpg-card">
                         <div class="card-body">
+                            <!-- Nome del ruolo -->
                             <h5 class="card-title"><?php echo $row['nome']; ?></h5>
-                            <p><strong>Bonuses:</strong></p>
-                            <ul>
-                                <?php
-                                // Recupera i bonus associati a questo ruolo
-                                $role_id = $row['id_role'];
-                                $sql_bonus = "SELECT * FROM roles_bonus WHERE fk_role = $role_id";
-                                $result_bonus = $link->query($sql_bonus);
-                                if ($result_bonus->num_rows > 0) {
-                                    while($row_bonus = $result_bonus->fetch_assoc()) {
-                                        echo "<li><strong>" . $row_bonus['nome'] . ":</strong> " . $row_bonus['descrizione'] . "</li>";
-                                    }
-                                } else {
-                                    echo "<li>No bonuses available for this role.</li>";
-                                }
-                                ?>
-                            </ul>
+
+                            <!-- Statistiche del ruolo -->
+                            <p><strong>Statistic Bonus:</strong> <?php echo $row['statistic_name']; ?> +<?php echo $row['boost_statistic']; ?></p>
+
+                            <!-- Abilità del ruolo -->
+                            <p><strong>Skill Bonus:</strong> <?php echo $row['skill_name']; ?> +<?php echo $row['boost_skill']; ?></p>
+
+                            <!-- Nome dell'abilità giornaliera -->
+                            <p><strong>Daily Ability:</strong> <?php echo $row['name_role_daily']; ?></p>
+
+                            <!-- Descrizione dell'abilità giornaliera -->
+                            <p><?php echo $row['description_role_daily']; ?></p>
+                            <a href="role_details.php?id=<?php echo $row['id_role']; ?>" class="btn btn-outline-light disabled">Scopri di più</a>
                         </div>
                     </div>
                 </div>
