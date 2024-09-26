@@ -107,8 +107,7 @@ $result = $link->query($sql);
                 <div class="isotope-item col-12 col-md-6 col-lg-4">
                     <div class="card h-100 rpg-card mb-3">
                         <!-- Inserisci l'immagine di sfondo sulla destra -->
-                        <img src="img/classes/<?php echo strtolower($row['name']); ?>.jpg" alt="<?php echo $row['name']; ?>" class="img-fluid">
-
+                        <img src="img/classes/knight.jpg" alt="<?php echo $row['name']; ?>" class="img-fluid">
                         <!-- Corpo della card -->
                         <div class="card-body">
                             <!-- Nome e HP con allineamento e colore -->
