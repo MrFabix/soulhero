@@ -1,70 +1,76 @@
-<style>
-    body {
-    }
-
-    .footer {
-        position: ;
-        bottom: 0;
-        width: 100%;
-        background-color: #f8f9fa;
-        border-top: 1px solid #dee2e6;
-        padding: 10px 20px; /* Add some padding to make the footer look better */
-        z-index: 99999;
-    }
-</style>
+<link href="style/global.css" rel="stylesheet">
 
 <?php
 
-//prendo url corrente
-$url = $_SERVER['REQUEST_URI'];
-
+$page = basename($_SERVER['PHP_SELF'], ".php");
 ?>
-<link href="style/rpg_style.css" rel="stylesheet">
+<nav class="navbar navbar-expand-custom navbar-mainbg">
+    <a class="navbar-brand navbar-logo" href="#">RPG</a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+            <li class="nav-item <?php echo ($page == 'index') ? 'active' : ''; ?>">
+                <a class="nav-link" href="/">Home Page</a>
+            </li>
+            <li class="nav-item  <?php echo ($page == 'classes') ? 'active' : ''; ?>">
+                <a class="nav-link" href="">Classes</a>
 
+            </li>
+            <li class="nav-item <?php echo ($page == 'ancestry') ? 'active' : ''; ?>">
+                <a class="nav-link" href="/ancestry.php">Ancestry</a>
+            </li>
 
-
-<header class="p-3 text-bg-dark  fixed-top">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <i class="bi bi-dice-6-fill"></i>
-            </a>
-
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/index.php" class="nav-link px-2 <?php if ($url == "/index.php") {echo "text-secondary";} else {echo "text-white";} ?>">Home</a></li>
-                <li><a href="/ancestry.php" class="nav-link px-2 <?php if ($url == "/ancestry.php") {echo "text-secondary";} else {echo "text-white";} ?>">Ancestry</a></li>
-                <li><a href="/classes.php" class="nav-link px-2 <?php if ($url == "/classes.php") {echo "text-secondary";} else {echo "text-white";} ?>">Classes</a></li>
-                <li><a href="/roles.php" class="nav-link px-2 <?php if ($url == "/roles.php") {echo "text-secondary";} else {echo "text-white";} ?>">Roles</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Weapons
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/weapons.php">All Weapons</a></li>
-                        <li><a class="dropdown-item" href="/weapons.php?category=1">Unamerde</a></li>
-                        <li><a class="dropdown-item" href="/weapons.php?category=2">Single Handed</a></li>
-                        <li><a class="dropdown-item" href="/weapons.php?category=3">Two Handend</a></li>
-                        <li><a class="dropdown-item" href="/weapons.php?category=4">Firearms</a></li>
-                        <li><a class="dropdown-item" href="/weapons.php?category=5">Ranged</a></li>
-                    </ul>
-                </li>
-                <li><a href="/feats.php" class="nav-link px-2 <?php if ($url == "/feats.php") {echo "text-secondary";} else {echo "text-white";} ?>">Feats</a></li>
-
-
-            </ul>
-
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="/search.php" method="GET" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." name="query" aria-label="Search">
-            </form>
-
-
-            <div class="text-end">
-                <a href="/login.php" class="btn btn-outline-light me-2">Login</a>
-                <a href="/register.php" class="btn btn-warning">Sign-up</a>
-
-            </div>
-        </div>
+        </ul>
     </div>
-</header>
+</nav>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script>
+    // ---------Responsive-navbar-active-animation-----------
+    function test(){
+        var tabsNewAnim = $('#navbarSupportedContent');
+        var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+        var activeItemNewAnim = tabsNewAnim.find('.active');
+        var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+        var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+        var itemPosNewAnimTop = activeItemNewAnim.position();
+        var itemPosNewAnimLeft = activeItemNewAnim.position();
+        $(".hori-selector").css({
+            "top":itemPosNewAnimTop.top + "px",
+            "left":itemPosNewAnimLeft.left + "px",
+            "height": activeWidthNewAnimHeight + "px",
+            "width": activeWidthNewAnimWidth + "px"
+        });
+        $("#navbarSupportedContent").on("click","li",function(e){
+            $('#navbarSupportedContent ul li').removeClass("active");
+            $(this).addClass('active');
+            var activeWidthNewAnimHeight = $(this).innerHeight();
+            var activeWidthNewAnimWidth = $(this).innerWidth();
+            var itemPosNewAnimTop = $(this).position();
+            var itemPosNewAnimLeft = $(this).position();
+            $(".hori-selector").css({
+                "top":itemPosNewAnimTop.top + "px",
+                "left":itemPosNewAnimLeft.left + "px",
+                "height": activeWidthNewAnimHeight + "px",
+                "width": activeWidthNewAnimWidth + "px"
+            });
+        });
+    }
+    $(document).ready(function(){
+        setTimeout(function(){ test(); });
+    });
+    $(window).on('resize', function(){
+        setTimeout(function(){ test(); }, 500);
+    });
+    $(".navbar-toggler").click(function(){
+        $(".navbar-collapse").slideToggle(300);
+        setTimeout(function(){ test(); });
+    });
 
 
+
+
+</script>

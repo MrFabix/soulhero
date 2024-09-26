@@ -81,8 +81,8 @@ $result = $link->query($sql);
     <div class="row isotope-grid" id="roles-grid">
         <?php if ($result->num_rows > 0): ?>
             <?php while($row = $result->fetch_assoc()): ?>
-                <div class="col-3 mb-3  isotope-item">
-                    <div class="card h-100 rpg-card">
+                <div class="isotope-item col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 rpg-card mb-3">
                         <div class="card-body">
                             <!-- Nome del ruolo -->
                             <h5 class="card-title"><?php echo $row['nome']; ?></h5>
