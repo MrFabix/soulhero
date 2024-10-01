@@ -1,7 +1,7 @@
 <?php
 include("include/config.php");
 
-$sql = "SELECT * FROM Ancestries";
+$sql = "SELECT * FROM ancestries";
 $result = $link->query($sql);
 ?>
 

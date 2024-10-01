@@ -132,6 +132,66 @@ $cost_main_ability = $class_main_ability['cost'];
                 text-align: center;
             }
         }
+        .fixed-level-nav {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            border-left: 2px solid #d4af37;
+            padding: 10px;
+            border-radius: 10px 0 0 10px;
+            z-index: 1000; /* Per essere sempre sopra */
+            width: 40px; /* Larghezza iniziale ridotta */
+            transition: width 0.3s ease; /* Transizione per l'espansione */
+            overflow: hidden; /* Nascondi il testo quando collapsed */
+            white-space: nowrap;
+        }
+
+        .fixed-level-nav:hover {
+            width: 180px; /* Larghezza maggiore al passaggio del mouse */
+        }
+
+        .fixed-level-nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .fixed-level-nav ul li {
+            margin: 10px 0;
+        }
+
+        .fixed-level-nav ul li a {
+            color: #f7d794;
+            font-family: 'Cinzel', serif;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 10px;
+            display: block;
+            transition: background 0.3s, color 0.3s; /* Transizione per sfondo e colore */
+        }
+
+        .fixed-level-nav ul li a:hover {
+            background-color: #d4af37;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .fixed-level-nav ul li a span {
+            display: none; /* Nascondi il testo */
+        }
+
+        .fixed-level-nav:hover ul li a span {
+            display: inline; /* Mostra il testo al passaggio del mouse */
+        }
+
+        @media (max-width: 767px) {
+            .fixed-level-nav {
+                display: none; /* Nasconde la barra su schermi piccoli */
+            }
+        }
+
     </style>
 
 </head>
@@ -139,6 +199,25 @@ $cost_main_ability = $class_main_ability['cost'];
 <?php include("include/nav.php"); ?>
 
 <body>
+<body>
+
+<!-- Barra di navigazione fissa a destra -->
+<nav class="fixed-level-nav">
+    <ul>
+        <li><a href="#level1">Level 1</a></li>
+        <li><a href="#level2">Level 2</a></li>
+        <li><a href="#level3">Level 3</a></li>
+        <li><a href="#level4">Level 4</a></li>
+        <li><a href="#level5">Level 5</a></li>
+        <li><a href="#level6">Level 6</a></li>
+        <li><a href="#level7">Level 7</a></li>
+        <li><a href="#level8">Level 8</a></li>
+        <li><a href="#level9">Level 9</a></li>
+        <li><a href="#level10">Level 10</a></li>
+    </ul>
+</nav>
+
+<!-- Resto del contenuto della pagina -->
 
 <div class="container mt-5">
     <div class="class-detail-container">
@@ -148,7 +227,7 @@ $cost_main_ability = $class_main_ability['cost'];
             <span class="text-danger fs-5">HP: <?php echo $class['hp']; ?></span> <!-- Aumenta leggermente il font per l'HP -->
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level1">
             <h2 class="level-header">Level 1</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Proficiencies:</span>
@@ -363,7 +442,7 @@ $cost_main_ability = $class_main_ability['cost'];
 
 
 
-        <div class="level-section">
+        <div class="level-section" id="level2">
             <h2 class="level-header">Level 2</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Secondary Abilities</span>
@@ -408,7 +487,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level3">
             <h2 class="level-header">Level 3</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Features</span>
@@ -446,7 +525,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level4">
             <h2 class="level-header">Level 4</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Secondary Abilities</span>
@@ -491,7 +570,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level5">
             <h2 class="level-header">Level 5 - Ultimate Ability</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Ultimate Ability</span>
@@ -572,7 +651,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level6">
             <h2 class="level-header">Level 6</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Secondary Abilities</span>
@@ -617,7 +696,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level7">
             <h2 class="level-header">Level 7</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Features</span>
@@ -655,7 +734,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level8">
             <h2 class="level-header">Level 8</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Secondary Abilities</span>
@@ -700,7 +779,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level9">
             <h2 class="level-header">Level 9</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Features</span>
@@ -738,7 +817,7 @@ $cost_main_ability = $class_main_ability['cost'];
             </div>
         </div>
 
-        <div class="level-section">
+        <div class="level-section" id="level10">
             <h2 class="level-header">Level 10</h2>
             <div class="ability">
                 <span class="ability-title"><?php echo $class['name']; ?>'s Secondary Abilities</span>

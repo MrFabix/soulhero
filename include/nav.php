@@ -25,6 +25,10 @@ $page = basename($_SERVER['PHP_SELF'], ".php");
             <li class="nav-item  <?php echo ($page == 'roles') ? 'active' : ''; ?>">
                 <a class="nav-link" href="/roles.php">Roles</a>
             </li>
+            <li class="nav-item  <?php echo ($page == 'weapons') ? 'active' : ''; ?>">
+                <a class="nav-link" href="/weapons.php">Weapons</a>
+            </li>
+
 
         </ul>
     </div>
