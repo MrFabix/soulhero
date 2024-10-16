@@ -1,7 +1,12 @@
 <?php
 include '../include/config.php';
 //query pre prendere tutti i roles
-$sql = "SELECT * FROM armor JOIN  armor_armor_traits on armor.id = armor_armor_traits.fk_armor JOIN armot_type on armor.fk_armor_type = armor_traits.id";
+$sql = "SELECT weapons.id, weapons.name, weapons.price, weapons.damage, weapons.bulk, weapon_type.name AS weapon_type, GROUP_CONCAT(weapon_traits.name SEPARATOR ', ') AS weapon_traits
+            FROM weapons
+            JOIN weapon_type ON weapons.weapon_type_id = weapon_type.id
+            LEFT JOIN weapon_weapon_traits ON weapons.id = weapon_weapon_traits.weapon_id
+            LEFT JOIN weapon_traits ON weapon_weapon_traits.weapon_trait_id = weapon_traits.id
+            GROUP BY weapons.id";
 $result = $link->query($sql);
 
 
