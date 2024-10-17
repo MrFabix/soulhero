@@ -112,7 +112,7 @@ $result = $link->query($sql);
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6 text-right">
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal">Add Weapon</button>
+                                        <button class="btn btn-primary" onclick="addWeapon()" >Add Weapon</button>
                                     </div>
                                 </div>
                             </div>
@@ -229,6 +229,25 @@ $result = $link->query($sql);
                         <input type="text" class="form-control" id="weaponName" name="weaponName" required>
                     </div>
                     <div class="mb-3">
+                        <label for="weaponType" class="form-label">Weapon Type</label>
+                        <select class="form-select" id="weaponType" name="weaponType" required>
+                            <option value="">Select Weapon Type</option>
+                            <?php
+                            $sql = "SELECT * FROM weapon_type";
+                            $result = $link->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>0 results</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
                         <label for="weaponPrice" class="form-label">Price</label>
                         <input type="number" class="form-control" id="weaponPrice" name="weaponPrice" required>
                     </div>
@@ -240,7 +259,26 @@ $result = $link->query($sql);
                         <label for="weaponBulk" class="form-label">Bulk</label>
                         <input type="text" class="form-control" id="weaponBulk" name="weaponBulk" required>
                     </div>
-                    <!-- Add additional fields as necessary -->
+                    <!-- Multi select with traits -->
+                    <div class="mb-3">
+                        <label for="weaponTraits" class="form-label">Traits</label>
+                        <select class="form-select" id="weaponTraits" name="weaponTraits[]" multiple>
+                            <?php
+                            $sql = "SELECT * FROM weapon_traits";
+                            $result = $link->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>0 results</option>";
+                            }
+                            ?>
+                        </select>
+
+
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -331,6 +369,12 @@ $result = $link->query($sql);
     }
 
     function editWeapon(id) {
+
+        //pulisco i campi del form
+        $('#weaponForm').trigger('reset');
+
+
+
         // Retrieve weapon data using AJAX or existing array
         $.ajax({
             url: '/api/get_weapon.php',
@@ -339,6 +383,7 @@ $result = $link->query($sql);
             success: function(response) {
                 // Assuming response is JSON with weapon data
                 const weapon = JSON.parse(response);
+                console.log(weapon);
 
                 // Fill the modal fields
                 $('#weaponId').val(weapon.id);
@@ -346,6 +391,8 @@ $result = $link->query($sql);
                 $('#weaponPrice').val(weapon.price);
                 $('#weaponDamage').val(weapon.damage);
                 $('#weaponBulk').val(weapon.bulk);
+                $('#weaponType').val(weapon.weapon_type_id);
+
 
                 // Change modal title and button text
                 $('#weaponModalLabel').text('Edit Weapon');
@@ -398,6 +445,20 @@ $result = $link->query($sql);
             }
         });
     });
+
+    function addWeapon() {
+        // Reset the form and clear the fields
+        $('#weaponForm').trigger('reset');
+        $('#weaponId').val('');  // Make sure to reset the hidden input field for weaponId
+
+        // Reset the modal title and button text
+        $('#weaponModalLabel').text('Add Weapon');
+        $('#saveWeaponBtn').text('Add Weapon');
+
+        // Show the modal (this can also be done via Bootstrap attributes)
+        $('#weaponModal').modal('show');
+    }
+
 
 
 </script>
