@@ -108,7 +108,7 @@
                     </li>
 
                     <li>
-                        <a href="javascript:void(0);"> Arcana Runes </a>
+                        <a href="/wiki/arcana_runes.php"> Arcana Runes </a>
                     </li>
 
 
@@ -130,10 +130,13 @@
                         <a href="/wiki/armor.php"> Armor  </a>
                     </li>
                     <li>
+                        <a href="/wiki/shield.php"> Shields </a>
+                    </li>
+                    <li>
                         <a href="/wiki/weapon.php"> Weapons </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);"> Gear and Common items</a>
+                        <a href="/wiki/gear_common_items.php"> Gear and Common items</a>
                     </li>
                 </ul>
             </li>

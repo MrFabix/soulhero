@@ -1,14 +1,7 @@
 <?php
 include '../include/config.php';
 //query pre prendere tutti i roles
-$sql = "SELECT weapons.id, weapons.name, weapons.price, weapons.damage, weapons.bulk, weapon_type.name AS weapon_type,  weapon_traits.description AS traits_description, weapons.range, weapons.reload, weapons.capacity, weapons.misfire,
-        GROUP_CONCAT(CONCAT(weapon_traits.name, IF(weapon_weapon_traits.value IS NOT NULL, CONCAT(' (', weapon_weapon_traits.value, ')'), '')) SEPARATOR ', ') AS weapon_traits
-        FROM weapons
-        JOIN weapon_type ON weapons.weapon_type_id = weapon_type.id
-        LEFT JOIN weapon_weapon_traits ON weapons.id = weapon_weapon_traits.weapon_id
-        LEFT JOIN weapon_traits ON weapon_weapon_traits.weapon_trait_id = weapon_traits.id
-        GROUP BY weapons.id";
-
+$sql="SELECT * FROM gear_items";
 $result = $link->query($sql);
 
 
@@ -44,7 +37,7 @@ $result = $link->query($sql);
         .bs-popover {
             cursor: pointer;
             text-decoration: underline;
-            }
+        }
     </style>
 
 
@@ -79,7 +72,7 @@ $result = $link->query($sql);
                 <div class="page-meta">
                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Weapon</a></li>
+                            <li class="breadcrumb-item"><a href="#">Gear Common </a></li>
                         </ol>
                     </nav>
                 </div>
@@ -95,20 +88,7 @@ $result = $link->query($sql);
                                     <div class="col-sm-12 col-md-12">
                                         <!--FILTRO CON TIPOLOGIA DI ARMA-->
                                         <div class=" ">
-                                            <select class="form-control" onchange="filterType(this)">
-                                                <option value="0">All</option>
-                                                <?php
-                                                $sql = "SELECT * FROM weapon_type";
-                                                $result_select = $link->query($sql);
-                                                if ($result_select->num_rows > 0) {
-                                                    while ($row_select = $result_select->fetch_assoc()) {
-                                                        echo "<option value='" . $row_select["name"] . "'>" . $row_select["name"] . "</option>";
-                                                    }
-                                                } else {
-                                                    echo "<option value='0'>0 results</option>";
-                                                }
-                                                ?>
-                                            </select>
+
                                         </div>
 
                                     </div>
@@ -119,15 +99,10 @@ $result = $link->query($sql);
                                 <tr>
                                     <th class="checkbox-column"></th>
                                     <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Damage</th>
                                     <th>Bulk</th>
-                                    <th>Type</th>
-                                    <th>Range</th>
-                                    <th>Reload</th>
-                                    <th>Capacity</th>
-                                    <th>Misfire</th>
-                                    <th>Traits</th>
+                                    <th>Price</th>
+                                    <th>Benefit</th>
+
                                     <th class="no-content text-center">Action</th>
 
                                 </tr>
@@ -139,29 +114,11 @@ $result = $link->query($sql);
                                         echo "<tr>";
                                         echo "<td></td>";
                                         echo "<td>" . ($row["name"]) . "</td>";
-                                        echo "<td>" . ($row["price"]) . "</td>";
-                                        echo "<td>" . ($row["damage"]) . "</td>";
                                         echo "<td>" . ($row["bulk"]) . "</td>";
-                                        echo "<td>" . ($row["weapon_type"]) . "</td>";
-                                        echo "<td>" . ($row["range"]) . "</td>";
-                                        echo "<td>" . ($row["reload"]) . "</td>";
-                                        echo "<td>" . ($row["capacity"]) . "</td>";
-                                        echo "<td>" . ($row["misfire"]) . "</td>";
-                                        //explode weapon_traits in array
-                                        echo "<td>";
-                                        if ($row["weapon_traits"] != null) {
-                                            $weapon_traits = explode(", ", $row["weapon_traits"]);
-                                            if ($row["traits_description"] != null) {
-                                                $trait_description =  ($row["traits_description"]);
-                                            }else{
-                                                $trait_description = "No description";
-                                            }
-                                        }
-                                        foreach ($weapon_traits as $trait) {
+                                        echo "<td>" . ($row["price"]) . "</td>";
+                                        echo "<td>" . ($row["benefit"]) . "</td>";
 
-                                            echo '<a class="bs-popover " data-bs-container="body" data-bs-trigger="hover" data-bs-content="' .$trait_description . '" data-bs-placement="top" data-bs-toggle="popover" data-original-title="" title="">' . $trait . ' </a>,';
-                                        }
-                                        echo "</td>";
+
 
 
 
@@ -201,8 +158,6 @@ $result = $link->query($sql);
 
             </div>
 
-
-
         </div>
         <!--  BEGIN FOOTER  -->
         <?php include '../include/footer.php'; ?>
@@ -241,7 +196,7 @@ $result = $link->query($sql);
                     </div>`
             }
         }],
-        "order": [[ 2, "asc" ]],
+        "order": [[ 3, "asc" ]],
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l>" +
             "<'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
