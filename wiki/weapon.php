@@ -92,7 +92,7 @@ $result = $link->query($sql);
                         <div class="widget-content widget-content-area br-8">
                             <div class="table-form">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12">
+                                    <div class="col-sm-6 col-md-6">
                                         <!--FILTRO CON TIPOLOGIA DI ARMA-->
                                         <div class=" ">
                                             <select class="form-control" onchange="filterType(this)">
@@ -110,7 +110,9 @@ $result = $link->query($sql);
                                                 ?>
                                             </select>
                                         </div>
-
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 text-right">
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weaponModal">Add Weapon</button>
                                     </div>
                                 </div>
                             </div>
@@ -176,9 +178,8 @@ $result = $link->query($sql);
                                                         </svg>
                                                     </a>
                                                     <div class='dropdown-menu' aria-labelledby='dropdownMenuLink1'>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>View</a>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>Edit</a>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>Delete</a>
+                                                        <a class='dropdown-item' href='#' onclick='editWeapon(" . $row['id'] . ")'>Edit</a>
+                                                        <a class='dropdown-item' href='#' onclick='deleteWeapon(" . $row['id'] . ")'>Delete</a>
                                                     </div>
                                                 </div>
                                             </td>";
@@ -212,6 +213,62 @@ $result = $link->query($sql);
 
 </div>
 <!-- END MAIN CONTAINER -->
+<!-- Modal for Add/Edit Weapon -->
+<div class="modal fade" id="weaponModal" tabindex="-1" aria-labelledby="weaponModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="weaponForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="weaponModalLabel">Add Weapon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="weaponId" name="weaponId">
+                    <div class="mb-3">
+                        <label for="weaponName" class="form-label">Weapon Name</label>
+                        <input type="text" class="form-control" id="weaponName" name="weaponName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="weaponPrice" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="weaponPrice" name="weaponPrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="weaponDamage" class="form-label">Damage</label>
+                        <input type="text" class="form-control" id="weaponDamage" name="weaponDamage" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="weaponBulk" class="form-label">Bulk</label>
+                        <input type="text" class="form-control" id="weaponBulk" name="weaponBulk" required>
+                    </div>
+                    <!-- Add additional fields as necessary -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveWeaponBtn">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Delete Confirmation -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this weapon?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <script src="../src/plugins/src/global/vendors.min.js"></script>
@@ -273,7 +330,81 @@ $result = $link->query($sql);
 
     }
 
+    function editWeapon(id) {
+        // Retrieve weapon data using AJAX or existing array
+        $.ajax({
+            url: '/api/get_weapon.php',
+            type: 'GET',
+            data: {id: id},
+            success: function(response) {
+                // Assuming response is JSON with weapon data
+                const weapon = JSON.parse(response);
+
+                // Fill the modal fields
+                $('#weaponId').val(weapon.id);
+                $('#weaponName').val(weapon.name);
+                $('#weaponPrice').val(weapon.price);
+                $('#weaponDamage').val(weapon.damage);
+                $('#weaponBulk').val(weapon.bulk);
+
+                // Change modal title and button text
+                $('#weaponModalLabel').text('Edit Weapon');
+                $('#saveWeaponBtn').text('Save changes');
+
+                // Show the modal
+                $('#weaponModal').modal('show');
+            }
+        });
+    }
+
+    function deleteWeapon(id) {
+        // Store the weapon ID in a global variable or hidden field
+        window.weaponIdToDelete = id;
+
+        // Show the delete confirmation modal
+        $('#deleteModal').modal('show');
+    }
+
+    $('#confirmDeleteBtn').click(function() {
+        // Perform the delete operation using AJAX
+        $.ajax({
+            url: '/api/delete_weapon.php',
+            type: 'POST',
+            data: {id: window.weaponIdToDelete},
+            success: function(response) {
+                // Handle success response (e.g., reload the table or remove the deleted row)
+                location.reload(); // Reload the page to refresh the table
+            }
+        });
+    });
+
+    // Handling the submit action for add/edit form
+    $('#weaponForm').submit(function(event) {
+        event.preventDefault();
+
+        // Determine whether we are adding or editing
+        const actionUrl = $('#weaponId').val() ? '/api/edit_weapon.php' : '/api/add_weapon.php';
+
+        // Send the form data via AJAX
+        $.ajax({
+            url: actionUrl,
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Handle success response (e.g., reload the table)
+                console.log(response);
+                $('#weaponModal').modal('hide');
+               // location.reload();
+            }
+        });
+    });
+
+
 </script>
+
+
+
+
 
 </body>
 </html>
