@@ -259,6 +259,27 @@ $result = $link->query($sql);
                         <label for="weaponBulk" class="form-label">Bulk</label>
                         <input type="text" class="form-control" id="weaponBulk" name="weaponBulk" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="weaponRange" class="form-label">Range</label>
+                        <input type="text" class="form-control" id="weaponRange" name="weaponRange" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="weaponReload" class="form-label">Reload</label>
+                        <input type="text" class="form-control" id="weaponReload" name="weaponReload" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="weaponCapacity" class="form-label">Capacity</label>
+                        <input type="text" class="form-control" id="weaponCapacity" name="weaponCapacity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="weaponMisfire" class="form-label">Misfire</label>
+                        <input type="text" class="form-control" id="weaponMisfire" name="weaponMisfire" required>
+                    </div>
+
+
+
+
+
                     <!-- Multi select with traits -->
                     <div class="mb-3">
                         <label for="weaponTraits" class="form-label">Traits</label>
@@ -392,12 +413,9 @@ $result = $link->query($sql);
                 $('#weaponDamage').val(weapon.damage);
                 $('#weaponBulk').val(weapon.bulk);
                 $('#weaponType').val(weapon.weapon_type_id);
-
-
                 // Change modal title and button text
                 $('#weaponModalLabel').text('Edit Weapon');
                 $('#saveWeaponBtn').text('Save changes');
-
                 // Show the modal
                 $('#weaponModal').modal('show');
             }
