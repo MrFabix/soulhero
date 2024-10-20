@@ -112,7 +112,7 @@ $result = $link->query($sql);
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-6 text-right">
-                                        <button class="btn btn-primary" onclick="addWeapon()" >Add Weapon</button>
+                               <!--         <button class="btn btn-primary" onclick="addWeapon()" >Add Weapon</button> -->
                                     </div>
                                 </div>
                             </div>
@@ -276,32 +276,36 @@ $result = $link->query($sql);
                         <input type="text" class="form-control" id="weaponMisfire" name="weaponMisfire" required>
                     </div>
 
-
-
-
-
                     <!-- Multi select with traits -->
                     <div class="mb-3">
                         <label for="weaponTraits" class="form-label">Traits</label>
-                        <select class="form-select" id="weaponTraits" name="weaponTraits[]" multiple>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th></th>
+                                <th>Weapon Traits</th>
+                                <th>Value</th>
+                            </tr>
                             <?php
                             $sql = "SELECT * FROM weapon_traits";
                             $result = $link->query($sql);
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
-                                    echo "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
+                                    echo "<tr>";
+                                    echo "<td><input type='checkbox' name='weaponTraits[]' value='" . $row["id"] . "'></td>";
+                                    echo "<td>" . $row["name"] . "</td>";
+                                    echo "<td><input type='text' name='weaponTraitValues[" . $row["id"] . "]'></td>";
+                                    echo "</tr>";
                                 }
                             } else {
                                 echo "<option value=''>0 results</option>";
                             }
                             ?>
-                        </select>
+                        </table>
+                    </div>
 
+                    <div id="traitsValuesContainer"></div>
 
-
-
-                </div>
-                <div class="modal-footer">
+                    <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="saveWeaponBtn">Save changes</button>
                 </div>
@@ -387,94 +391,6 @@ $result = $link->query($sql);
             ecommerceList.columns(5).search(type_id).draw();
         }
 
-    }
-
-    function editWeapon(id) {
-
-        //pulisco i campi del form
-        $('#weaponForm').trigger('reset');
-
-
-
-        // Retrieve weapon data using AJAX or existing array
-        $.ajax({
-            url: '/api/get_weapon.php',
-            type: 'GET',
-            data: {id: id},
-            success: function(response) {
-                // Assuming response is JSON with weapon data
-                const weapon = JSON.parse(response);
-                console.log(weapon);
-
-                // Fill the modal fields
-                $('#weaponId').val(weapon.id);
-                $('#weaponName').val(weapon.name);
-                $('#weaponPrice').val(weapon.price);
-                $('#weaponDamage').val(weapon.damage);
-                $('#weaponBulk').val(weapon.bulk);
-                $('#weaponType').val(weapon.weapon_type_id);
-                // Change modal title and button text
-                $('#weaponModalLabel').text('Edit Weapon');
-                $('#saveWeaponBtn').text('Save changes');
-                // Show the modal
-                $('#weaponModal').modal('show');
-            }
-        });
-    }
-
-    function deleteWeapon(id) {
-        // Store the weapon ID in a global variable or hidden field
-        window.weaponIdToDelete = id;
-
-        // Show the delete confirmation modal
-        $('#deleteModal').modal('show');
-    }
-
-    $('#confirmDeleteBtn').click(function() {
-        // Perform the delete operation using AJAX
-        $.ajax({
-            url: '/api/delete_weapon.php',
-            type: 'POST',
-            data: {id: window.weaponIdToDelete},
-            success: function(response) {
-                // Handle success response (e.g., reload the table or remove the deleted row)
-                location.reload(); // Reload the page to refresh the table
-            }
-        });
-    });
-
-    // Handling the submit action for add/edit form
-    $('#weaponForm').submit(function(event) {
-        event.preventDefault();
-
-        // Determine whether we are adding or editing
-        const actionUrl = $('#weaponId').val() ? '/api/edit_weapon.php' : '/api/add_weapon.php';
-
-        // Send the form data via AJAX
-        $.ajax({
-            url: actionUrl,
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                // Handle success response (e.g., reload the table)
-                console.log(response);
-                $('#weaponModal').modal('hide');
-               // location.reload();
-            }
-        });
-    });
-
-    function addWeapon() {
-        // Reset the form and clear the fields
-        $('#weaponForm').trigger('reset');
-        $('#weaponId').val('');  // Make sure to reset the hidden input field for weaponId
-
-        // Reset the modal title and button text
-        $('#weaponModalLabel').text('Add Weapon');
-        $('#saveWeaponBtn').text('Add Weapon');
-
-        // Show the modal (this can also be done via Bootstrap attributes)
-        $('#weaponModal').modal('show');
     }
 
 

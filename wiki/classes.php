@@ -105,7 +105,7 @@ $result = $link->query($sql);
                                     <img src="../src/assets/img/masonry-blog-style-4.jpeg" class="card-img-top" alt="...">
                                     <div class="card-body px-0 pb-0">
                                         <h5 class="card-title"><?php echo $row['name']; ?></h5>
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roleModal<?php echo $row['id']; ?>">Details</button>
+                                        <a class="btn btn-primary" href="/wiki/class.php?id=<?php echo $row['id']; ?>">View Class</a>
                                     </div>
                                 </div>
                             </div>
