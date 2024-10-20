@@ -88,10 +88,31 @@ if ($range_ability != '' && $range_ability != 0) {
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../src/plugins/src/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/table/datatable/dt-global_style.css">
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/table/datatable/dt-global_style.css">
+
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+
+    <style>
+
+        @media (min-width: 768px) {
+            .nav-pills {
+                width: 200px; /* Imposta la larghezza fissa solo per schermi grandi */
+                white-space: nowrap; /* Impedisce che il testo vada a capo */
+                text-overflow: ellipsis; /* Aggiunge i puntini se il testo è troppo lungo */
+            }
+
+            .nav-pills .nav-link {
+                width: 100%; /* Fa sì che i pulsanti riempiano tutto lo spazio disponibile */
+            }
+        }
+
+
+
+    </style>
 
 </head>
 <body class="layout-boxed">
@@ -189,84 +210,84 @@ if ($range_ability != '' && $range_ability != 0) {
                                     <!--Class path -->
                                     <hr>
 
-                                    <div class="row layout top-spacing">
-                                        <div class="vertical-pill">
-                                            <div class="d-flex flex-column flex-md-row align-items-start">
-                                                <div class="nav flex-row flex-md-column nav-pills me-3 justify-content-center align-items-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                    <?php
-                                                    $sql = "SELECT * FROM class_path WHERE fk_class = $id_class";
-                                                    $result = $link->query($sql);
-                                                    $i = 0;
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        $name = $row['name'];
-                                                        $id = $row['id'];
-                                                        $i++;
-                                                        echo "<button class='nav-link ".($i == 1 ? 'active' : '')."' id='v-pills-profile-tab-$id' data-bs-toggle='pill' data-bs-target='#v-pills-profile-$id' type='button' role='tab' aria-controls='v-pills-profile-$id' aria-selected='".($i == 1 ? 'true' : 'false')."'>$name</button>";
-                                                    }
-                                                    ?>
-                                                </div>
-                                                <div class="tab-content" id="v-pills-tabContent">
-                                                    <?php
-                                                    $sql = "SELECT class_path.*,general_feats.name as name_feats,general_feats.bonus, skill.name as name_skill , s.name as name_skill_misc
-                                                            FROM class_path JOIN general_feats on class_path.path_feats = general_feats.id LEFT JOIN  skill on class_path.fk_skill = skill.id  LEFT JOIN skill s  on class_path.fk_skill_misc = s.id
-                                                            WHERE fk_class = $id_class";
-                                                    $result = $link->query($sql);
-                                                    $i = 0;
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        $description = $row['description'];
-                                                        $bonus_feats = $row['bonus'];
-                                                        $id = $row['id'];
-                                                        $name_feats = $row['name_feats'];
-                                                        $name_skill = $row['name_skill'];
-                                                        $n_skill_boost = $row['n_skill_boost'];
-                                                        $n_combat_boost = $row['n_combact_boost'];
-                                                        $n_misc = $row['n_misc'];
-                                                        $name_skill_misc = $row['name_skill_misc'];
-                                                        $name_path_bonus = $row['name_path_bonus'];
-                                                        $description_path_bonus = $row['description_path_bonus'];
-                                                        $name_path_ability = $row['name_path_ability'];
-                                                        $description_path_ability = $row['description_path_ability'];
-                                                        $action_path_ability = $row['action_path_ability'];
-                                                        $requisite_path_ability = $row['requisite_path_ability'];
-                                                        $range_path_ability = $row['range_path_ability'];
-                                                        $cost_path_ability = $row['cost_path_ability'];
-                                                        if ($cost_path_ability != '' && $cost_path_ability != 0) {
-                                                            $cost_path_ability = "$cost_path_ability" . " " . "MANA.";
-                                                        } else {
-                                                            $cost_path_ability = '';
-                                                        }
-                                                        if ($range_path_ability != '' && $range_path_ability != 0) {
-                                                            $range_path_ability = "Range: $range_path_ability" . ".";
-                                                        } else {
-                                                            $range_path_ability = '';
-                                                        }
-
-
-
-
-
-
-                                                        $i++;
-                                                        ?>
-                                                        <div class='tab-pane fade <?php echo $i == 1 ? "show active" : ""; ?>' id='v-pills-profile-<?php echo $id; ?>' role='tabpanel' aria-labelledby='v-pills-profile-tab-<?php echo $id; ?>'>
-                                                                    <span class=" text-primary fw-bold"> Nome Skill boost </span> (Skill Boost)
-                                                            <p>You gain <span class="text-primary"> <?php echo $n_skill_boost; ?> </span> skill boost in <span class="text-primary"> <?php echo $name_skill; ?> </span>, this can bring the prof to the 2nd step.  You gain a + <?php echo $n_misc?> to  <span class="text-primary"> <?php echo $name_skill_misc; ?> </span> .</p>
-
-
-                                                                    <span class="text-primary fw-bold"> <?php echo $name_feats; ?> </span> (Path Feat)
-                                                                    <p><?php echo $bonus_feats; ?></p>
-                                                                   <span class="text-primary fw-bold"> <?php echo $name_path_bonus; ?> </span> (Path Bonus)
-                                                                    <p><?php echo $description_path_bonus; ?></p>
-
-                                                                    <span class="text-primary fw-bold"> <?php echo $name_path_ability; ?> <?php echo $action_path_ability; ?> </span> (Path Ability)
-                                                                    <p><?php echo $cost_path_ability; ?> <?php echo $range_path_ability; ?> <?php echo $description_path_ability; ?></p>
-                                                        </div>
+                                        <div class="row layout ">
+                                            <div class="vertical-pill">
+                                                <div class="d-flex flex-column flex-md-row align-items-start">
+                                                    <div class="nav flex-row flex-md-column nav-pills me-3 justify-content-center align-items-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                                         <?php
-                                                    } ?>
+                                                        $sql = "SELECT * FROM class_path WHERE fk_class = $id_class";
+                                                        $result = $link->query($sql);
+                                                        $i = 0;
+                                                        while ($row = $result->fetch_assoc()) {
+                                                            $name = $row['name'];
+                                                            $id = $row['id'];
+                                                            $i++;
+                                                            echo "<button class='nav-link ".($i == 1 ? 'active' : '')."' id='v-pills-profile-tab-$id' data-bs-toggle='pill' data-bs-target='#v-pills-profile-$id' type='button' role='tab' aria-controls='v-pills-profile-$id' aria-selected='".($i == 1 ? 'true' : 'false')."'>$name</button>";
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <div class="tab-content" id="v-pills-tabContent">
+                                                        <?php
+                                                        $sql = "SELECT class_path.*,general_feats.name as name_feats,general_feats.bonus, skill.name as name_skill , s.name as name_skill_misc
+                                                                FROM class_path JOIN general_feats on class_path.path_feats = general_feats.id LEFT JOIN  skill on class_path.fk_skill = skill.id  LEFT JOIN skill s  on class_path.fk_skill_misc = s.id
+                                                                WHERE fk_class = $id_class";
+                                                        $result = $link->query($sql);
+                                                        $i = 0;
+                                                        while ($row = $result->fetch_assoc()) {
+                                                            $description = $row['description'];
+                                                            $bonus_feats = $row['bonus'];
+                                                            $id = $row['id'];
+                                                            $name_feats = $row['name_feats'];
+                                                            $name_skill = $row['name_skill'];
+                                                            $n_skill_boost = $row['n_skill_boost'];
+                                                            $n_combat_boost = $row['n_combact_boost'];
+                                                            $n_misc = $row['n_misc'];
+                                                            $name_skill_misc = $row['name_skill_misc'];
+                                                            $name_path_bonus = $row['name_path_bonus'];
+                                                            $description_path_bonus = $row['description_path_bonus'];
+                                                            $name_path_ability = $row['name_path_ability'];
+                                                            $description_path_ability = $row['description_path_ability'];
+                                                            $action_path_ability = $row['action_path_ability'];
+                                                            $requisite_path_ability = $row['requisite_path_ability'];
+                                                            $range_path_ability = $row['range_path_ability'];
+                                                            $cost_path_ability = $row['cost_path_ability'];
+                                                            if ($cost_path_ability != '' && $cost_path_ability != 0) {
+                                                                $cost_path_ability = "$cost_path_ability" . " " . "MANA.";
+                                                            } else {
+                                                                $cost_path_ability = '';
+                                                            }
+                                                            if ($range_path_ability != '' && $range_path_ability != 0) {
+                                                                $range_path_ability = "Range: $range_path_ability" . ".";
+                                                            } else {
+                                                                $range_path_ability = '';
+                                                            }
+
+
+
+
+
+
+                                                            $i++;
+                                                            ?>
+                                                            <div class='tab-pane fade <?php echo $i == 1 ? "show active" : ""; ?>' id='v-pills-profile-<?php echo $id; ?>' role='tabpanel' aria-labelledby='v-pills-profile-tab-<?php echo $id; ?>'>
+                                                                        <span class=" text-primary fw-bold"> Nome Skill boost </span> (Skill Boost)
+                                                                <p>You gain <span class="text-primary"> <?php echo $n_skill_boost; ?> </span> skill boost in <span class="text-primary"> <?php echo $name_skill; ?> </span>, this can bring the prof to the 2nd step.  You gain a + <?php echo $n_misc?> to  <span class="text-primary"> <?php echo $name_skill_misc; ?> </span> .</p>
+
+
+                                                                        <span class="text-primary fw-bold"> <?php echo $name_feats; ?> </span> (Path Feat)
+                                                                        <p><?php echo $bonus_feats; ?></p>
+                                                                       <span class="text-primary fw-bold"> <?php echo $name_path_bonus; ?> </span> (Path Bonus)
+                                                                        <p><?php echo $description_path_bonus; ?></p>
+
+                                                                        <span class="text-primary fw-bold"> <?php echo $name_path_ability; ?> <?php echo $action_path_ability; ?> </span> (Path Ability)
+                                                                        <p><?php echo $cost_path_ability; ?> <?php echo $range_path_ability; ?> <?php echo $description_path_ability; ?></p>
+                                                            </div>
+                                                            <?php
+                                                        } ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
                                     <hr>
 
@@ -274,17 +295,56 @@ if ($range_ability != '' && $range_ability != 0) {
 
                                     <h4 class="text-info fw-bold"> <?php echo $name_class ?> 's Core Ability</h4>
                                     <p >At level 1, you choose a <?php echo $name_class ?>'s Core Ability. Once chosen you can not change your Core Ability.</p>
+                                    <div class="table-responsive">
+                                    <table id="core-ability" class="table table-striped table-bordered "s>
+                                        <thead>
+                                        <tr class=" ">
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                            <th>Cost</th>
+                                            <th>Range</th>
+                                            <th>Requisite</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $sql = "SELECT * FROM class_core_abilities WHERE fk_class = $id_class";
+                                        $result = $link->query($sql);
+                                        while ($row = $result->fetch_assoc()) {
+                                            $name = $row['name'];
+                                            $description = $row['description'];
+                                            $action = $row['action'];
+                                            $cost = $row['cost'];
+                                            $range = $row['range_class'];
+                                            $requisite = $row['requisite'];
+                                            if ($cost != '' && $cost != 0) {
+                                                $cost = "$cost" . " " ;
+                                            } else {
+                                                $cost = '';
+                                            }
+                                            if ($range != '' && $range != 0) {
+                                                $range = "Range: $range"  ;
+                                            } else {
+                                                $range = '';
+                                            }
+                                            echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                        }
+
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                    </div>
 
 
-
-
-
-
-
-
-
-
-
+                                    
 
 
 
@@ -318,8 +378,8 @@ if ($range_ability != '' && $range_ability != 0) {
 <script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
 <script src="../src/plugins/src/waves/waves.min.js"></script>
 <script src="../layouts/modern-dark-menu/app.js"></script>
-
-    <script src="../src/plugins/src/highlight/highlight.pack.js"></script>
+<script src="../src/assets/js/custom.js"></script>
+<script src="../src/plugins/src/highlight/highlight.pack.js"></script>
 
 
     <!-- END GLOBAL MANDATORY SCRIPTS -->
@@ -329,36 +389,45 @@ if ($range_ability != '' && $range_ability != 0) {
 <script src="../src/assets/js/dashboard/dash_1.js"></script>
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script src="../src/plugins/src/table/datatable/datatables.js"></script>
 <script>
     // Inizializza Isotope dopo il caricamento della pagina
-    var grid = document.querySelector('#roles-grid');
-    var iso = new Isotope(grid, {
-        itemSelector: '.isotope-item',
-        layoutMode: 'fitRows'
-    });
-
-    // Filtro basato sull'input di ricerca
-    var searchInput = document.querySelector('#t-text');
-    searchInput.addEventListener('keyup', function() {
-        var filterValue = searchInput.value.toLowerCase();
-        iso.arrange({
-            filter: function(itemElem) {
-                var roleName = itemElem.querySelector('.card-title').textContent.toLowerCase();
-                return roleName.includes(filterValue);
+    ecommerceList = $('#core-ability').DataTable({
+        headerCallback:function(e, a, t, n, s) {
+            e.getElementsByTagName("th")[0].innerHTML=`
+                <div class="form-check form-check-primary d-block new-control">
+                    <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
+                </div>`
+        },
+        columnDefs:[ {
+            targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
+                return `
+                    <div class="form-check form-check-primary d-block new-control">
+                        <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
+                    </div>`
             }
-        });
-    });
+        }],
+        "order": [[ 2, "asc" ]],
+        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l>" +
+            "<'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        "oLanguage": {
 
-    // Ordinamento
-    var sortBySelect = document.querySelector('.form-select[aria-label="Sort By"]');
-    sortBySelect.addEventListener('change', function() {
-        var sortByValue = sortBySelect.value;
+            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
 
-        iso.arrange({
-            sortBy: sortByValue
-        });
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 50
     });
+    multiCheck(ecommerceList);
+
+
 </script>
 
 </body>
