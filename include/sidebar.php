@@ -169,11 +169,65 @@
             </li>
 
 
+
+
+
+            <!--Feats-->
+            <li class="menu">
+                <a href="#feats" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>                        <span>Feats</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="feats" data-bs-parent="#accordionExample">
+                    <li>
+                        <a href="/wiki/general_feats.php"> General Feats </a>
+                    </li>
+                    <li>
+                        <a href="/wiki/class_feats.php"> Class Feats </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!--Abilities-->
+            <li class="menu">
+                <a href="#abilities" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>                        <span>Abilities</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="abilities" data-bs-parent="#accordionExample">
+                    <li>
+                        <a href="/wiki/core_abilities.php"> Core Abilities </a>
+                    </li>
+                    <li>
+                        <a href="/wiki/secondary_abilities.php"> Secondary Abilities </a>
+                    </li>
+                    <li>
+                        <a href="/wiki/path_abilities.php"> Path Abilities </a>
+                    </li>
+                    <li>
+                        <a href="/wiki/ultimate_abilities.php"> Ultimate Abilities </a>
+                    </li>
+
+                </ul>
+
+
+
+
+            <hr>
+
             <!-- Profencies -->
             <li class="menu">
                 <a href="#profencies" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>                        <span>Profencies</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>                        <span>Rules</span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -186,9 +240,7 @@
                     <li>
                         <a href="/wiki/combact_profs.php"> Combact Profs </a>
                     </li>
-                    <li>
-                        <a href="/wiki/general_feats.php"> General Feats </a>
-                    </li>
+
                 </ul>
             </li>
 

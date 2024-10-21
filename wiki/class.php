@@ -250,7 +250,7 @@ if ($range_ability != '' && $range_ability != 0) {
                                                         }
                                                         ?>
                                                     </div>
-                                                    <div class="tab-content" id="v-pills-tabContent">
+                                                    <div class="tab-content widget-content widget-content-area" id="v-pills-tabContent">
                                                         <?php
                                                         $sql = "SELECT class_path.*,general_feats.name as name_feats,general_feats.bonus, skill.name as name_skill , s.name as name_skill_misc
                                                                 FROM class_path JOIN general_feats on class_path.path_feats = general_feats.id LEFT JOIN  skill on class_path.fk_skill = skill.id  LEFT JOIN skill s  on class_path.fk_skill_misc = s.id
@@ -341,6 +341,11 @@ if ($range_ability != '' && $range_ability != 0) {
                                         while ($row = $result->fetch_assoc()) {
                                             $name = $row['name'];
                                             $description = $row['description'];
+                                            //mando a capo la descrizione se è troppo lunga
+                                            if (strlen($description) > 100) {
+                                                $description = wordwrap($description, 100, "<br>");
+                                            }
+
                                             $action = $row['action'];
                                             $cost = $row['cost'];
                                             $range = $row['range_class'];
@@ -391,6 +396,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 $action = $row['action'];
                                                 $cost = $row['cost'];
                                                 $range = $row['range_class'];
@@ -475,6 +483,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 $action = $row['action'];
                                                 $cost = $row['cost'];
                                                 $range = $row['range_class'];
@@ -574,6 +585,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 $action = $row['action'];
                                                 $cost = $row['cost'];
                                                 $range = $row['range_class'];
@@ -638,6 +652,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 $action = $row['action'];
                                                 $cost = $row['cost'];
                                                 $range = $row['range_class'];
@@ -683,6 +700,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 echo "<tr>
                                                     <td>$name</td>
                                                     <td>$description</td>
@@ -725,6 +745,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 $action = $row['action'];
                                                 $cost = $row['cost'];
                                                 $range = $row['range_class'];
@@ -783,6 +806,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 echo "<tr>
                                                     <td>$name</td>
                                                     <td>$description</td>
@@ -823,6 +849,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 $action = $row['action'];
                                                 $cost = $row['cost'];
                                                 $range = $row['range_class'];
@@ -922,6 +951,9 @@ if ($range_ability != '' && $range_ability != 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];
                                                 $description = $row['description'];
+                                                if (strlen($description) > 100) {
+                                                    $description = wordwrap($description, 100, "<br>");
+                                                }
                                                 $action = $row['action'];
                                                 $cost = $row['cost'];
                                                 $range = $row['range_class'];
