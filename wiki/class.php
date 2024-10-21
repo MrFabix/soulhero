@@ -55,7 +55,6 @@ if ($range_ability != '' && $range_ability != 0) {
     $range = '';
 }
 
-//core ability
 
 
 
@@ -110,6 +109,31 @@ if ($range_ability != '' && $range_ability != 0) {
             }
         }
 
+        .level-navigation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .level-dot {
+            width: 20px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Aggiungi una transizione fluida */
+        }
+
+        .level-dot.active {
+            background-color: #e2a03f ;
+        }
+
+        .level-dot:hover {
+            background-color: #e2a03f ;
+            transform: scale(1.2); /* Ingrandisce il puntino al passaggio del mouse */
+            box-shadow: 0 0 10px rgb(200, 147, 68); /* Aggiunge un'ombra luminosa intorno al puntino */
+        }
 
 
     </style>
@@ -184,13 +208,13 @@ if ($range_ability != '' && $range_ability != 0) {
 
                 <div class="row layout top-spacing">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing">
-                        <div class="widget-content widget-content-area">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="">Level 1</h3>
+                        <div class="widget-content widget-content-area" id="level-1">
+                            <div class="d-flex justify-content-between " >
+                                <h3 class="text-warning">Level 1</h3>
 
                             </div>
                             <hr>
-                                <div class="">
+                                <div class="" >
                                     <span class="text-info fw-bold"><?php echo $row['name']; ?> 's profencies</span>
                                     <p>At level 1 you gain <span class="text-primary"> <?php echo $row['n_skills_boost']; ?> skills boost </span>  and  <span class="text-primary"> <?php echo $row['n_combat_boost']; ?> Combat Boosts </span>, none of these boost can bring a proficiency higher than the 1st.
                                         Then you gain <span class="text-primary"> <?php echo $value_combat ?> Combat Boosts in <?php echo $name_combat; ?> </span> and <span class="text-primary"> <?php echo $value_skill ?> Skills Boosts in <?php echo $name_skill; ?> </span>.</p>
@@ -292,8 +316,11 @@ if ($range_ability != '' && $range_ability != 0) {
                                     <hr>
 
                                     <!-- Core Ability-->
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="text-info fw-bold"> <?php echo $name_class ?> 's Core Ability</h4>
+                                        <h4 class="text-warning">Level 1</h4>
 
-                                    <h4 class="text-info fw-bold"> <?php echo $name_class ?> 's Core Ability</h4>
+                                    </div>
                                     <p >At level 1, you choose a <?php echo $name_class ?>'s Core Ability. Once chosen you can not change your Core Ability.</p>
                                     <div class="table-responsive">
                                     <table id="core-ability" class="table table-striped table-bordered "s>
@@ -343,13 +370,591 @@ if ($range_ability != '' && $range_ability != 0) {
                                     </table>
                                     </div>
 
+                                    <!--Bard’s Secondary Abilities-->
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="text-info fw-bold"> <?php echo $name_class ?> 's Secondary Abilities  </h4><h4 class="text-warning"> Level 1</h4>
+                                    </div>
+                                        <div class="table-responsive">
+                                        <table id="secondary-abilities" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                                <th>Cost</th>
+                                                <th>Range</th>
+                                                <th>Requisite</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_secondary_abilities WHERE fk_class = $id_class and level = 1";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                $action = $row['action'];
+                                                $cost = $row['cost'];
+                                                $range = $row['range_class'];
+                                                $requisite = $row['requisite'];
+                                                if ($cost != '' && $cost != 0) {
+                                                    $cost = "$cost" . " " . "MANA.";
+                                                } else {
+                                                    $cost = '';
+                                                }
+                                                if ($range != '' && $range != 0) {
+                                                    $range = "Range: $range" . ".";
+                                                } else {
+                                                    $range = '';
+                                                }
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                            }
+                                            ?>
 
-                                    
+                                        </table>
+                                    </div>
+                                    <!-- Bard’s Class Features -->
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <h4 class="text-info fw-bold"> <?php echo $name_class ?> 's class Features  </h4><h4 class="text-warning"> Level 1</h4>
+                                    </div>
 
+                                    <div class="table-responsive">
+                                        <table id="class-features" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_features WHERE fk_class = $id_class and level = 1";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                </tr>";
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <!--LEVEL 2-->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-2">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 2</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Secondary Abilities</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="secondary-abilities" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                                <th>Cost</th>
+                                                <th>Range</th>
+                                                <th>Requisite</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_secondary_abilities WHERE fk_class = $id_class and level = 2";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                $action = $row['action'];
+                                                $cost = $row['cost'];
+                                                $range = $row['range_class'];
+                                                $requisite = $row['requisite'];
+                                                if ($cost != '' && $cost != 0) {
+                                                    $cost = "$cost" . " " . "MANA.";
+                                                } else {
+                                                    $cost = '';
+                                                }
+                                                if ($range != '' && $range != 0) {
+                                                    $range = "Range: $range" . ".";
+                                                } else {
+                                                    $range = '';
+                                                }
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                            }
+                                            ?>
+
+                                        </table>
+                                    </div>
+
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <!--LEVEL 3 Class features -->
+
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3"  id="level-3">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 3</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Class Features</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="class-features" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_features WHERE fk_class = $id_class and level = 3";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                </tr>";
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
 
 
                                 </div>
+                            </div>
                         </div>
+
+                        <!--LEVEL 4-->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-4">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 4</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Secondary Abilities</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="secondary-abilities" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                                <th>Cost</th>
+                                                <th>Range</th>
+                                                <th>Requisite</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_secondary_abilities WHERE fk_class = $id_class and level = 4";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                $action = $row['action'];
+                                                $cost = $row['cost'];
+                                                $range = $row['range_class'];
+                                                $requisite = $row['requisite'];
+                                                if ($cost != '' && $cost != 0) {
+                                                    $cost = "$cost" . " " . "MANA.";
+                                                } else {
+                                                    $cost = '';
+                                                }
+                                                if ($range != '' && $range != 0) {
+                                                    $range = "Range: $range" . ".";
+                                                } else {
+                                                    $range = '';
+                                                }
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                            }
+                                            ?>
+
+                                        </table>
+                                    </div>
+
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--LEVEL 5 CORE ABILITIES-->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-5">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 5</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Core Abilities</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="core-ability" class="table table-striped table-bordered">
+                                            <thead>
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                                <th>Cost</th>
+                                                <th>Range</th>
+                                                <th>Requisite</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            $sql = "SELECT * FROM class_core_abilities WHERE fk_class = $id_class";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                $action = $row['action'];
+                                                $cost = $row['cost'];
+                                                $range = $row['range_class'];
+                                                $requisite = $row['requisite'];
+                                                if ($cost != '' && $cost != 0) {
+                                                    $cost = "$cost" . " " . "MANA.";
+                                                } else {
+                                                    $cost = '';
+                                                }
+                                                if ($range != '' && $range != 0) {
+                                                    $range = "Range: $range" . ".";
+                                                } else {
+                                                    $range = '';
+                                                }
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                            }
+
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <hr>
+                                    <!--  Class Features lvl 5-->
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Class Features</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="class-features" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_features WHERE fk_class = $id_class and level = 5";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                </tr>";
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                                    <hr>
+                                </div>
+                            </div>
+
+
+                        <!--LEVEL 6  Secondary Abilities-->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-6">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 6</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Secondary Abilities</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="secondary-abilities" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                                <th>Cost</th>
+                                                <th>Range</th>
+                                                <th>Requisite</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_secondary_abilities WHERE fk_class = $id_class and level = 6";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                $action = $row['action'];
+                                                $cost = $row['cost'];
+                                                $range = $row['range_class'];
+                                                $requisite = $row['requisite'];
+                                                if ($cost != '' && $cost != 0) {
+                                                    $cost = "$cost" . " " . "MANA.";
+                                                } else {
+                                                    $cost = '';
+                                                }
+                                                if ($range != '' && $range != 0) {
+                                                    $range = "Range: $range" . ".";
+                                                } else {
+                                                    $range = '';
+                                                }
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                            }
+                                            ?>
+
+                                        </table>
+                                    </div>
+
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--LEVEL 7 Class features -->
+
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-7">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 7</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Class Features</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="class-features" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_features WHERE fk_class = $id_class and level = 7";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                </tr>";
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--LEVEL 8-->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-8">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 8</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Secondary Abilities</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="secondary-abilities" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                                <th>Cost</th>
+                                                <th>Range</th>
+                                                <th>Requisite</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_secondary_abilities WHERE fk_class = $id_class and level = 8";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                $action = $row['action'];
+                                                $cost = $row['cost'];
+                                                $range = $row['range_class'];
+                                                $requisite = $row['requisite'];
+                                                if ($cost != '' && $cost != 0) {
+                                                    $cost = "$cost" . " " . "MANA.";
+                                                } else {
+                                                    $cost = '';
+                                                }
+                                                if ($range != '' && $range != 0) {
+                                                    $range = "Range: $range" . ".";
+                                                } else {
+                                                    $range = '';
+                                                }
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                            }
+                                            ?>
+
+                                        </table>
+                                    </div>
+
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LEVEL 9 Class features -->
+
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-9">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 9</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Class Features</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="class-features" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_features WHERE fk_class = $id_class and level = 9";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                </tr>";
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LEVEL 10-->
+
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-top-spacing mt-3" id="level-10">
+                            <div class="widget-content widget-content-area">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-warning">Level 10</h3>
+
+                                </div>
+
+                                <hr>
+                                <div class="">
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Secondary Abilities</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="secondary-abilities" class="table table-striped table-bordered">
+                                            <tr class=" ">
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Action</th>
+                                                <th>Cost</th>
+                                                <th>Range</th>
+                                                <th>Requisite</th>
+                                            </tr>
+                                            <?php
+                                            $sql = "SELECT * FROM class_secondary_abilities WHERE fk_class = $id_class and level = 10";
+                                            $result = $link->query($sql);
+                                            while ($row = $result->fetch_assoc()) {
+                                                $name = $row['name'];
+                                                $description = $row['description'];
+                                                $action = $row['action'];
+                                                $cost = $row['cost'];
+                                                $range = $row['range_class'];
+                                                $requisite = $row['requisite'];
+                                                if ($cost != '' && $cost != 0) {
+                                                    $cost = "$cost" . " " . "MANA.";
+                                                } else {
+                                                    $cost = '';
+                                                }
+                                                if ($range != '' && $range != 0) {
+                                                    $range = "Range: $range" . ".";
+                                                } else {
+                                                    $range = '';
+                                                }
+                                                echo "<tr>
+                                                    <td>$name</td>
+                                                    <td>$description</td>
+                                                    <td>$action</td>
+                                                    <td>$cost</td>
+                                                    <td>$range</td>
+                                                    <td>$requisite</td>
+                                                </tr>";
+                                            }
+                                            ?>
+
+                                        </table>
+                                    </div>
+
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -361,7 +966,13 @@ if ($range_ability != '' && $range_ability != 0) {
 
             </div>
 
+<!-- LISTA CON I 10 lvl per vedere dove mi trovo e poter navigare -->
 
+<div class="level-navigation position-fixed  bottom-50 end-0 p-3">
+    <?php for ($i = 1; $i <= 10; $i++): ?>
+        <span class="level-dot" id="level-dot-<?php echo $i; ?>" onclick="scrollToLevel(<?php echo $i; ?>)" title="Level <?php echo $i; ?>"></span>
+    <?php endfor; ?>
+</div>
 
         <!--  BEGIN FOOTER  -->
         <?php include '../include/footer.php'; ?>
@@ -391,41 +1002,26 @@ if ($range_ability != '' && $range_ability != 0) {
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 <script src="../src/plugins/src/table/datatable/datatables.js"></script>
 <script>
-    // Inizializza Isotope dopo il caricamento della pagina
-    ecommerceList = $('#core-ability').DataTable({
-        headerCallback:function(e, a, t, n, s) {
-            e.getElementsByTagName("th")[0].innerHTML=`
-                <div class="form-check form-check-primary d-block new-control">
-                    <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
-                </div>`
-        },
-        columnDefs:[ {
-            targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
-                return `
-                    <div class="form-check form-check-primary d-block new-control">
-                        <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
-                    </div>`
+    function scrollToLevel(level) {
+        document.querySelectorAll('.level-dot').forEach(dot => dot.classList.remove('active'));
+        document.getElementById('level-dot-' + level).classList.add('active');
+        // Aggiungi qui il codice per scrollare alla sezione desiderata
+        document.getElementById('level-' + level).scrollIntoView({behavior: 'smooth'});
+    }
+
+    //controllo in che sezione mi trovo per colorare il pallino
+    window.addEventListener('scroll', function() {
+        const levels = document.querySelectorAll('.layout-top-spacing');
+        const dots = document.querySelectorAll('.level-dot');
+        let currentLevel = 0;
+        levels.forEach((level, index) => {
+            if (level.getBoundingClientRect().top < 1) {
+                currentLevel = index + 1;
             }
-        }],
-        "order": [[ 2, "asc" ]],
-        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l>" +
-            "<'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-            "<'table-responsive'tr>" +
-            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-        "oLanguage": {
-
-            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-            "sInfo": "Showing page _PAGE_ of _PAGES_",
-            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-            "sSearchPlaceholder": "Search...",
-            "sLengthMenu": "Results :  _MENU_",
-        },
-
-        "stripeClasses": [],
-        "lengthMenu": [7, 10, 20, 50],
-        "pageLength": 50
+        });
+        dots.forEach(dot => dot.classList.remove('active'));
+        document.getElementById('level-dot-' + currentLevel).classList.add('active');
     });
-    multiCheck(ecommerceList);
 
 
 </script>
