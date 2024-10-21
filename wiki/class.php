@@ -164,7 +164,7 @@ if ($range_ability != '' && $range_ability != 0) {
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
 
-            <div class="middle-content container-xxl p-0">
+            <div class="middle-content container-xl p-0">
 
                 <!-- BREADCRUMB -->
                 <div class="page-meta">
@@ -968,7 +968,7 @@ if ($range_ability != '' && $range_ability != 0) {
 
 <!-- LISTA CON I 10 lvl per vedere dove mi trovo e poter navigare -->
 
-<div class="level-navigation position-fixed  bottom-50 end-0 p-3">
+        <div class="level-navigation position-fixed top-50 end-0 translate-middle-y d-flex flex-column align-items-center">
     <?php for ($i = 1; $i <= 10; $i++): ?>
         <span class="level-dot" id="level-dot-<?php echo $i; ?>" onclick="scrollToLevel(<?php echo $i; ?>)" title="Level <?php echo $i; ?>"></span>
     <?php endfor; ?>
