@@ -34,7 +34,7 @@
                 </a>
                 <ul class="collapse submenu list-unstyled show" id="dashboard" data-bs-parent="#accordionExample">
                     <li class="active">
-                        <a href="index.php"> HomePage </a>
+                        <a href="../index.php"> HomePage </a>
                     </li>
                     <li>
                         <a href="./test.php"> MyProfile </a>
@@ -104,7 +104,7 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="menuLevel1" data-bs-parent="#accordionExample">
                     <li>
-                        <a href="javascript:void(0);"> Rituals </a>
+                        <a href="/wiki/rituals.php"> Rituals </a>
                     </li>
 
                     <li>
@@ -181,10 +181,13 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="profencies" data-bs-parent="#accordionExample">
                     <li>
-                        <a href="./app-invoice-list.html"> Skill Profs </a>
+                        <a href="/wiki/skill_profs.php"> Skill Profs </a>
                     </li>
                     <li>
-                        <a href="./app-invoice-preview.html"> Combact Profs </a>
+                        <a href="/wiki/combact_profs.php"> Combact Profs </a>
+                    </li>
+                    <li>
+                        <a href="/wiki/general_feats.php"> General Feats </a>
                     </li>
                 </ul>
             </li>
