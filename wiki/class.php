@@ -18,16 +18,41 @@ $sql = "SELECT * FROM class_combact_boost JOIN combact_proficiencies on class_co
          WHERE fk_class = $id_class";
 $result_combat_boost = $link->query($sql);
 $row_combat_boost = $result_combat_boost->fetch_assoc();
-$name_combat = $row_combat_boost['name'];
-$value_combat = $row_combat_boost['value'];
+//controllo se è piu di uno
+if ($result_combat_boost->num_rows > 1) {
+    $name_combat = $row_combat_boost['name'];
+    $value_combat = $row_combat_boost['value'];
+    while ($row_combat_boost = $result_combat_boost->fetch_assoc()) {
+        $name_combat .= " or " . $row_combat_boost['name'];
+
+    }
+
+
+} else {
+    $name_combat = $row_combat_boost['name'];
+    $value_combat = $row_combat_boost['value'];
+}
+
 
 //mi recupero la skill_boost e la combat_boost
 $sql = "SELECT * FROM class_skill_boost JOIN skill on class_skill_boost.fk_skill = skill.id
          WHERE fk_class = $id_class";
 $result_skill_boost = $link->query($sql);
 $row_skill_boost = $result_skill_boost->fetch_assoc();
-$name_skill = $row_skill_boost['name'];
-$value_skill = $row_skill_boost['value'];
+//controllo se è piu di uno
+$name_skill ="";
+if ($result_skill_boost->num_rows > 1) {
+    $value_skill = $row_skill_boost['value'];
+    while ($row_skill_boost = $result_skill_boost->fetch_assoc()) {
+        $name_skill .= " and " . $row_skill_boost['name'];
+        }
+
+    }else{
+        $name_skill = $row_skill_boost['name'];
+        $value_skill = $row_skill_boost['value'];
+    }
+
+
 
 //CLASS PERK
 $sql = "SELECT * FROM class_perk where fk_class = $id_class";
