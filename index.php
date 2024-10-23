@@ -8,4 +8,5 @@
 
 header("Location: homepage.php");
 ?>
+<meta name="algolia-site-verification"  content="5C71C4041DE87686" />
 

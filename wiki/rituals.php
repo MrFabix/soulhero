@@ -91,7 +91,7 @@ $result = $link->query($sql);
                                     <div class="card-header ">
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-title text-warning "><?php echo $row['name']; ?></h5>
-                                            <h5 class="card-title text-warning "><?php echo $row['ritualist']; ?></h5>
+                                            <h5 class="card-title  "><?php echo $row['ritualist']; ?></h5>
 
                                         </div>
                                     </div>
