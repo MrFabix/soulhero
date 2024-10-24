@@ -242,7 +242,7 @@ if ($range_ability != '' && $range_ability != 0) {
                                 <div class="" >
                                     <span class="text-info fw-bold"><?php echo $row['name']; ?> 's profencies</span>
                                     <p>At level 1 you gain <span class="text-primary"> <?php echo $row['n_skills_boost']; ?> skills boost </span>  and  <span class="text-primary"> <?php echo $row['n_combat_boost']; ?> Combat Boosts </span>, none of these boost can bring a proficiency higher than the 1st.
-                                        Then you gain <span class="text-primary"> <?php echo $value_combat ?> Combat Boosts in <?php echo $name_combat; ?> </span> and <span class="text-primary"> <?php echo $value_skill ?> Skills Boosts in <?php echo $name_skill; ?> </span>.</p>
+                                        Then you gain <span class="text-primary"> <?php echo $value_combat ?> Combat Boosts in <?php echo $name_combat; ?> </span> and <span class="text-primary"> <?php echo $value_skill ?> Skills Boosts in <?php echo $name_skill; ?> </span>, these can bring the prof to the 2nd step.</p>
                                     </p>
                                     <hr>
                                     <span class="text-info fw-bold"><?php echo $name_perk; ?> </span>(class perk)
@@ -250,7 +250,7 @@ if ($range_ability != '' && $range_ability != 0) {
                                     <p><?php echo $description_perk; ?></p>
                                     <hr>
                                     <!-- Class Ability-->
-                                    <span class="text-info fw-bold"><?php echo $name_ability; ?>  [<?php echo $action_ability; ?> ]</span> (class ability)
+                                    <span class="text-info fw-bold"><?php echo $name_ability; ?>  <?php echo $action_ability; ?> </span> (class ability)
                                     <p><?php echo $cost; ?> <?php echo $range; ?> <?php echo $description_ability; ?></p>
                                     <hr>
                                     <!-- Class Path-->
@@ -278,7 +278,7 @@ if ($range_ability != '' && $range_ability != 0) {
                                                     <div class="tab-content widget-content widget-content-area" id="v-pills-tabContent">
                                                         <?php
                                                         $sql = "SELECT class_path.*,general_feats.name as name_feats,general_feats.bonus, skill.name as name_skill , s.name as name_skill_misc
-                                                                FROM class_path JOIN general_feats on class_path.path_feats = general_feats.id LEFT JOIN  skill on class_path.fk_skill = skill.id  LEFT JOIN skill s  on class_path.fk_skill_misc = s.id
+                                                                FROM class_path JOIN general_feats on class_path.path_feats = general_feats.id LEFT JOIN  skill on class_path.fk_skill = skill.id  LEFT JOIN skill s  on class_path.fk_skill_misc = s.id 
                                                                 WHERE fk_class = $id_class";
                                                         $result = $link->query($sql);
                                                         $i = 0;
@@ -300,6 +300,7 @@ if ($range_ability != '' && $range_ability != 0) {
                                                             $requisite_path_ability = $row['requisite_path_ability'];
                                                             $range_path_ability = $row['range_path_ability'];
                                                             $cost_path_ability = $row['cost_path_ability'];
+                                                            $name_skill_boost = $row['name_skill_boost'];
                                                             if ($cost_path_ability != '' && $cost_path_ability != 0) {
                                                                 $cost_path_ability = "$cost_path_ability" . " " . "MANA.";
                                                             } else {
@@ -312,14 +313,10 @@ if ($range_ability != '' && $range_ability != 0) {
                                                             }
 
 
-
-
-
-
                                                             $i++;
                                                             ?>
                                                             <div class='tab-pane fade <?php echo $i == 1 ? "show active" : ""; ?>' id='v-pills-profile-<?php echo $id; ?>' role='tabpanel' aria-labelledby='v-pills-profile-tab-<?php echo $id; ?>'>
-                                                                        <span class=" text-primary fw-bold"> Nome Skill boost </span> (Skill Boost)
+                                                                        <span class=" text-primary fw-bold"> <?php echo $name_skill_boost; ?> </span> (Skill Boost)
                                                                 <p>You gain <span class="text-primary"> <?php echo $n_skill_boost; ?> </span> skill boost in <span class="text-primary"> <?php echo $name_skill; ?> </span>, this can bring the prof to the 2nd step.  You gain a + <?php echo $n_misc?> to  <span class="text-primary"> <?php echo $name_skill_misc; ?> </span> .</p>
 
 
@@ -330,9 +327,44 @@ if ($range_ability != '' && $range_ability != 0) {
 
                                                                         <span class="text-primary fw-bold"> <?php echo $name_path_ability; ?> <?php echo $action_path_ability; ?> </span> (Path Ability)
                                                                         <p><?php echo $cost_path_ability; ?> <?php echo $range_path_ability; ?> <?php echo $description_path_ability; ?></p>
+
+                                                                <?php
+                                                                if (isset($row['fk_spellcasting'])){
+                                                                    $sql = "SELECT * FROM spellcasting WHERE id =". $row['fk_spellcasting'];
+                                                                    $resultspellcasting = $link->query($sql);
+                                                                    $rowspellcasting = $resultspellcasting->fetch_assoc();
+                                                                    $description_spellcasting = $rowspellcasting['description'];
+                                                                    //pulisco la stinga trim
+                                                                    $name_spellcasting = $rowspellcasting['name'];
+                                                                    $description_spellcasting = trim($description_spellcasting);
+
+                                                                    ?>
+                                                                    <span class="text-primary fw-bold"><?php echo $name_spellcasting; ?> </span> (Rune Knowledge)
+                                                                    <p><?php echo $description_spellcasting; ?></p>
+                                                                    <?php
+                                                                    if (isset($row["n_echoes"])){
+                                                                    ?>
+                                                                    <span class="text-primary fw-bold">Echoes of Magic </span>
+                                                                    <p>At level 1 choose <span class="text-primary"> <?php echo $row["n_echoes"]; ?> </span> Echoes of Magic.</p>
+
+                                                                        <?php
+                                                                    }
+                                                                        ?>
+
+
+
+
+                                                                <?php
+                                                                }
+                                                                ?>
+
+
+
+
+
                                                             </div>
                                                             <?php
-                                                        } ?>
+                                                                      } ?>
                                                     </div>
                                                 </div>
                                             </div>

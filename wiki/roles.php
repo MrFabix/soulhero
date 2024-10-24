@@ -1,9 +1,10 @@
 <?php
     include '../include/config.php';
     //query pre prendere tutti i roles
-    $sql = "SELECT roles.id_role, roles.nome, roles.name_role_daily, roles.description_role_daily, statistics.name AS statistic_name, roles.boost_statistic, skill.name AS skill_name, roles.boost_skill
+    $sql = "SELECT roles.id_role, roles.nome ,s1.name as statistic_name1, s2.name as statistic_name2, roles.misc_boost, skill.name as skill_name, roles.name_role_daily, roles.description_role_daily
  FROM roles 
- JOIN statistics ON roles.fk_statistic = statistics.id 
+ LEFT JOIN statistics s1 ON roles.fk_statistic = s1.id 
+ LEFT JOIN statistics s2 ON roles.fk_statistic_2 = s2.id 
  JOIN skill ON roles.fk_skill = skill.id";
     $result = $link->query($sql);
 
@@ -102,13 +103,38 @@
                     <?php
                     if ($result && mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
+                            $statistic_name1 = $row['statistic_name1'];
+                            //lovercase
+                            $statistic_name1 = strtolower($statistic_name1);
+                            $statistic_name1 = ucfirst($statistic_name1);
+                            $statistic_name2 = $row['statistic_name2'];
+                            //lovercase
+                            $statistic_name2 = strtolower($statistic_name2);
+                            $statistic_name2 = ucfirst($statistic_name2);
+
+                            $misc_boost = $row['misc_boost'];
+                            $skill_name = $row['skill_name'];
+
+                            $name_role_daily = $row['name_role_daily'];
+                            $description_role_daily = $row['description_role_daily'];
+
+
+
+
                             ?>
                             <div class="col-xl-3 col-lg-4 col-md-6 mb-4 isotope-item">
                                 <div class="card style-2 mb-md-0 mb-4 role-card">
                                     <img src="../src/assets/img/masonry-blog-style-4.jpeg" class="card-img-top" alt="...">
-                                    <div class="card-body px-0 pb-0">
-                                        <h5 class="card-title"><?php echo $row['nome']; ?></h5>
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roleModal<?php echo $row['id_role']; ?>">Details</button>
+                                    <div class="card-header">
+                                        <h5 class="card-title text-warning"><?php echo $row['nome']; ?></h5>
+                                    </div>
+                                    <div class="card-body text-white">
+                                        <span class="text-primary fw-bold">Stat Boost: </span>
+                                        <span> <?php echo $statistic_name1 . " or " . $statistic_name2; ?></span><br>
+                                        <span class="text-primary fw-bold">Misc Boost: </span>
+                                        <span>+ <?php echo $misc_boost; ?> <?php echo $skill_name; ?></span><br>
+                                        <span class="text-primary fw-bold"><?php echo $name_role_daily; ?> </span>  <span class="text-secondary"></span> :
+                                        <span><?php echo $description_role_daily; ?></span>
                                     </div>
                                 </div>
                             </div>

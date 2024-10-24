@@ -95,6 +95,7 @@ $result = $link->query($sql);
                                                 <option value="Advanced">Advanced</option>
                                                 <option value="Basic">Basic</option>
                                                 <option value="Structure">Structure</option>
+                                                <option value="Echoes of Magic">Echoes of Magic </option>
 
                                             </select>
                                         </div>

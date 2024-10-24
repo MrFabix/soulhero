@@ -4,84 +4,98 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin - Multipurpose Bootstrap Dashboard Template </title>
+    <title>Invisible Dice Roller</title>
     <link rel="icon" type="image/x-icon" href="../src/assets/img/favicon.ico"/>
-    <link href="../layouts/modern-dark-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/modern-dark-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
-    <script src="../layouts/modern-dark-menu/loader.js"></script>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/modern-dark-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="../layouts/modern-dark-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        #dice-rolling-canvas {
+            width: 100%;
+            height: 100%;
+            background-color: transparent; /* Transparent background */
+        }
+        .dice-roll-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+    </style>
 </head>
-<body class="layout-boxed">
-<!-- BEGIN LOADER -->
-<div id="load_screen"> <div class="loader"> <div class="loader-content">
-            <div class="spinner-grow align-self-center"></div>
-        </div></div></div>
-<!--  END LOADER -->
+<body>
 
-<!--  BEGIN NAVBAR  -->
-<?php include 'include/navbar.php'; ?>
-<!--  END NAVBAR  -->
+<!-- Dice Roll Button -->
 
-<!--  BEGIN MAIN CONTAINER  -->
-<div class="main-container" id="container">
-
-    <div class="overlay"></div>
-    <div class="search-overlay"></div>
-
-    <!--  BEGIN SIDEBAR  -->
-    <?php include 'include/sidebar.php'; ?>
-    <!--  END SIDEBAR  -->
-
-    <!--  BEGIN CONTENT AREA  -->
-    <div id="content" class="main-content">
-        <div class="layout-px-spacing">
-
-            <div class="middle-content container-xxl p-0">
-
-                <div class="row layout-top-spacing">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 layout-spacing">
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <!--  BEGIN FOOTER  -->
-        <?php include 'include/footer.php'; ?>
-        <!--  END FOOTER  -->
-    </div>
-    <!--  END CONTENT AREA  -->
-
-</div>
-<!-- END MAIN CONTAINER -->
+<!-- Canvas for dice rolling -->
+<canvas id="dice-rolling-canvas" class="dice-rolling-panel__container" touch-action="none" tabindex="1"></canvas>
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-<script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
-<script src="../src/plugins/src/waves/waves.min.js"></script>
-<script src="../layouts/modern-dark-menu/app.js"></script>
-<!-- END GLOBAL MANDATORY SCRIPTS -->
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/Oimo.js"></script> <!-- Optional: Oimo.js for physics engine -->
 
-<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="../src/plugins/src/apex/apexcharts.min.js"></script>
-<script src="../src/assets/js/dashboard/dash_1.js"></script>
-<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        // Get the canvas element
+        var canvas = document.getElementById('dice-rolling-canvas');
+
+        // Create BabylonJS engine
+        var engine = new BABYLON.Engine(canvas, true);
+
+        //disabilita movimentro della pagina
+
+
+        // Create the scene
+        var createScene = function() {
+            var scene = new BABYLON.Scene(engine);
+
+            // Create a basic arc rotate camera (user can rotate and zoom)
+            var camera = new BABYLON.ArcRotateCamera("camera",
+                BABYLON.Tools.ToRadians(45), BABYLON.Tools.ToRadians(45),
+                10, BABYLON.Vector3.Zero(), scene);
+            camera.attachControl(canvas, f);
+
+            // Create a simple light
+            var light = new BABYLON.HemisphericLight("light",
+                new BABYLON.Vector3(1, 1, 0), scene);
+            light.intensity = 0.7;
+
+            // Load a dice model
+            BABYLON.SceneLoader.ImportMeshAsync(["ground", "semi_house"], "https://assets.babylonjs.com/meshes/", "both_houses_scene.babylon");
+
+
+            // Add basic physics to the scene
+            scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0),
+                new BABYLON.OimoJSPlugin());
+
+            return scene;
+        };
+
+
+
+
+        var scene = createScene();
+
+
+
+        // Register a render loop to continuously render the scene
+        engine.runRenderLoop(function() {
+            scene.render();
+        });
+
+        // Resize the engine if the window is resized
+        window.addEventListener('resize', function() {
+            engine.resize();
+        });
+
+
+    });
+</script>
 
 </body>
 </html>

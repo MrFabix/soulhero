@@ -37,8 +37,10 @@
                         <a href="../index.php"> HomePage </a>
                     </li>
                     <li>
-                        <a href="./test.php"> MyProfile </a>
-                    </li>
+                        <a href="/application/calendar.php"> Calendar </a>
+<!--                    <li>-->
+<!--                        <a href="./test.php"> MyProfile </a>-->
+<!--                    </li>-->
                 </ul>
             </li>
 
@@ -71,26 +73,26 @@
                     </div>
                 </a>
             </li>
-
-            <li class="menu">
-                <a href="#invoice" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-gitlab"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"></path></svg>
-                        <span>Companion </span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="invoice" data-bs-parent="#accordionExample">
-                    <li>
-                        <a href="./app-invoice-list.html"> Animal Companions </a>
-                    </li>
-                    <li>
-                        <a href="./app-invoice-preview.html"> Familiars </a>
-                    </li>
-                </ul>
-            </li>
+<!---->
+<!--            <li class="menu" >-->
+<!--                <a href="#invoice" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" >-->
+<!--                    <div class="">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-gitlab"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"></path></svg>-->
+<!--                        <span>Companion </span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <ul class="collapse submenu list-unstyled" id="invoice" data-bs-parent="#accordionExample">-->
+<!--                    <li>-->
+<!--                        <a href="./app-invoice-list.html"> Animal Companions </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="./app-invoice-preview.html"> Familiars </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </li>-->
 
 
             <li class="menu">
