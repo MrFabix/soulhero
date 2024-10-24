@@ -97,13 +97,11 @@ $result = $link->query($sql);
                             <table id="ecommerce-list" class="table dt-table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th class="checkbox-column"></th>
                                     <th>Name</th>
-                                    <th>Bulk</th>
                                     <th>Price</th>
+                                    <th>Bulk</th>
                                     <th>Benefit</th>
 
-                                    <th class="no-content text-center">Action</th>
 
                                 </tr>
                                 </thead>
@@ -112,10 +110,10 @@ $result = $link->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
-                                        echo "<td></td>";
                                         echo "<td>" . ($row["name"]) . "</td>";
-                                        echo "<td>" . ($row["bulk"]) . "</td>";
                                         echo "<td>" . ($row["price"]) . "</td>";
+                                        echo "<td>" . ($row["bulk"]) . "</td>";
+
                                         echo "<td>" . ($row["benefit"]) . "</td>";
 
 
@@ -123,22 +121,6 @@ $result = $link->query($sql);
 
 
 
-                                        echo "<td class='text-center'>
-                                                <div class='dropdown'>
-                                                    <a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink1' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>
-                                                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-more-horizontal'>
-                                                            <circle cx='12' cy='12' r='1'></circle>
-                                                            <circle cx='19' cy='12' r='1'></circle>
-                                                            <circle cx='5' cy='12' r='1'></circle>
-                                                        </svg>
-                                                    </a>
-                                                    <div class='dropdown-menu' aria-labelledby='dropdownMenuLink1'>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>View</a>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>Edit</a>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td>";
                                         echo "</tr>";
                                     }
                                 } else {
@@ -182,21 +164,8 @@ $result = $link->query($sql);
 <script src="../src/plugins/src/table/datatable/datatables.js"></script>
 <script>
     ecommerceList = $('#ecommerce-list').DataTable({
-        headerCallback:function(e, a, t, n, s) {
-            e.getElementsByTagName("th")[0].innerHTML=`
-                <div class="form-check form-check-primary d-block new-control">
-                    <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
-                </div>`
-        },
-        columnDefs:[ {
-            targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
-                return `
-                    <div class="form-check form-check-primary d-block new-control">
-                        <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
-                    </div>`
-            }
-        }],
-        "order": [[ 3, "asc" ]],
+
+        "order": [[ 1, "asc" ]],
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l>" +
             "<'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +

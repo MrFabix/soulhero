@@ -1,12 +1,20 @@
 <?php
 include '../include/config.php';
 //query pre prendere tutti i roles
-$sql = "SELECT shields.id, shields.name, shields.price, shields.item_bonus, shields.bulk,   
-       GROUP_CONCAT(shield_traits.name SEPARATOR ', ') AS armor_traits, 
-       GROUP_CONCAT(shield_traits.description SEPARATOR ', ') AS traits_description 
+$sql = "SELECT shields.id, 
+        shields.name, 
+        shields.price, 
+        shields.item_bonus, 
+        shields.bulk,   
+        GROUP_CONCAT(DISTINCT 
+        IF(shields_shield_traits.value IS NOT NULL, 
+           CONCAT(shield_traits.name, ' (', shields_shield_traits.value, ')'), 
+           shield_traits.name) 
+        SEPARATOR ', ') AS shield_traits,
+    GROUP_CONCAT(DISTINCT shield_traits.description SEPARATOR ', ') AS shield_traits_description
 FROM shields 
-JOIN shields_shield_traits ON shields.id = shields_shield_traits.fk_shield 
-JOIN shield_traits ON shields_shield_traits.fk_shield_trait = shield_traits.id 
+LEFT JOIN shields_shield_traits ON shields.id = shields_shield_traits.fk_shield 
+LEFT JOIN shield_traits ON shields_shield_traits.fk_shield_trait = shield_traits.id 
 GROUP BY shields.id";
 $result = $link->query($sql);
 
@@ -102,14 +110,12 @@ $result = $link->query($sql);
                             <table id="ecommerce-list" class="table dt-table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th class="checkbox-column"></th>
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Item Bonus</th>
                                     <th>Bulk</th>
                                     <th>Shiled Traits</th>
 
-                                    <th class="no-content text-center">Action</th>
 
                                 </tr>
                                 </thead>
@@ -118,53 +124,36 @@ $result = $link->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
-                                        echo "<td></td>";
                                         echo "<td>" . ($row["name"]) . "</td>";
                                         echo "<td>" . ($row["price"]) . "</td>";
                                         echo "<td>" . ($row["item_bonus"]) . "</td>";
                                         echo "<td>" . ($row["bulk"]) . "</td>";
 
-                                        //explode weapon_traits in array
+                                        // Controllo se ci sono armor_traits
                                         echo "<td>";
-                                        if ($row["armor_traits"] != null) {
-                                            $weapon_traits = explode(", ", $row["armor_traits"]);
-                                            if ($row["traits_description"] != null) {
-                                                $trait_description =  ($row["traits_description"]);
-                                            }else{
-                                                $trait_description = "No description";
-                                            }
-                                        }
-                                        foreach ($weapon_traits as $trait) {
+                                        if ($row["shield_traits"] != null) {
+                                            // Dividi i tratti e le descrizioni in array separati
+                                            $armor_traits = explode(", ", $row["shield_traits"]);
+                                            $traits_descriptions = explode(", ", $row["shield_traits_description"]); // Descrizioni dei tratti
 
-                                            echo '<a class="bs-popover " data-bs-container="body" data-bs-trigger="hover" data-bs-content="' .$trait_description . '" data-bs-placement="top" data-bs-toggle="popover" data-original-title="" title="">' . $trait . ' </a>,';
+                                            // Cicla attraverso i tratti e le descrizioni
+                                            foreach ($armor_traits as $index => $trait) {
+                                                // Controllo se esiste una descrizione corrispondente per il tratto
+                                                $trait_description = isset($traits_descriptions[$index]) ? $traits_descriptions[$index] : "No description";
+
+                                                // Stampa il tratto come link con popover contenente la descrizione
+                                                echo '<a class="bs-popover" data-bs-container="body" data-bs-trigger="hover" data-bs-content="' . $trait_description . '" data-bs-placement="top" data-bs-toggle="popover" title="">' . $trait . '</a>, ';
+                                            }
                                         }
                                         echo "</td>";
 
-
-
-
-                                        echo "<td class='text-center'>
-                                                <div class='dropdown'>
-                                                    <a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink1' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>
-                                                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-more-horizontal'>
-                                                            <circle cx='12' cy='12' r='1'></circle>
-                                                            <circle cx='19' cy='12' r='1'></circle>
-                                                            <circle cx='5' cy='12' r='1'></circle>
-                                                        </svg>
-                                                    </a>
-                                                    <div class='dropdown-menu' aria-labelledby='dropdownMenuLink1'>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>View</a>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>Edit</a>
-                                                        <a class='dropdown-item' href='javascript:void(0);'>Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td>";
                                         echo "</tr>";
                                     }
                                 } else {
                                     echo "<tr><td colspan='8'>0 results</td></tr>";
                                 }
                                 ?>
+
 
 
 
@@ -204,21 +193,8 @@ $result = $link->query($sql);
 <script src="../src/plugins/src/table/datatable/datatables.js"></script>
 <script>
     ecommerceList = $('#ecommerce-list').DataTable({
-        headerCallback:function(e, a, t, n, s) {
-            e.getElementsByTagName("th")[0].innerHTML=`
-                <div class="form-check form-check-primary d-block new-control">
-                    <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
-                </div>`
-        },
-        columnDefs:[ {
-            targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
-                return `
-                    <div class="form-check form-check-primary d-block new-control">
-                        <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
-                    </div>`
-            }
-        }],
-        "order": [[ 2, "asc" ]],
+
+        "order": [[ 1, "asc" ]],
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l>" +
             "<'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +

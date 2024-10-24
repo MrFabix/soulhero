@@ -1,28 +1,12 @@
 <?php
 include '../include/config.php';
-//query pre prendere tutti i roles
-$sql="SELECT
-    armor.item_bonus,
-    armor.id,
-    armor.name,
-    armor.price,
-    armor.barrier,
-    armor.bulk,
-    armor_type.nome AS armor_type,
- GROUP_CONCAT(DISTINCT 
-        IF(armor_armor_traits.value IS NOT NULL, 
-           CONCAT(armor_traits.nome, ' (', armor_armor_traits.value, ')'), 
-           armor_traits.nome) 
-        SEPARATOR ', ') AS armor_traits,
-    GROUP_CONCAT(DISTINCT armor_traits.descrizione SEPARATOR ', ') AS traits_description
-FROM armor
-JOIN armor_type ON armor.fk_armor_type = armor_type.id
-LEFT JOIN armor_armor_traits ON armor.id = armor_armor_traits.fk_armor
-LEFT JOIN armor_traits ON armor_armor_traits.fk_armor_traits = armor_traits.id
-GROUP BY armor.id;
-";
-$result = $link->query($sql);
 
+// Query to retrieve class features and corresponding class names
+$sql = "SELECT class_core_abilities.name, class_core_abilities.description, class.name AS name_class , class_core_abilities.cost, class_core_abilities.range_class, class_core_abilities.requisite
+        FROM class_core_abilities 
+        JOIN class ON class_core_abilities.fk_class = class.id 
+        ORDER BY  name ASC ";
+$result = $link->query($sql);
 
 ?>
 
@@ -91,86 +75,84 @@ $result = $link->query($sql);
                 <div class="page-meta">
                     <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Armor</a></li>
+                            <li class="breadcrumb-item"><a href="#">Core Abilities</a></li>
                         </ol>
                     </nav>
                 </div>
                 <!-- /BREADCRUMB -->
 
                 <div class="row layout-top-spacing">
-
-
                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                         <div class="widget-content widget-content-area br-8">
                             <div class="table-form">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12">
-                                        <!--FILTRO CON TIPOLOGIA DI ARMA-->
-                                        <div class=" ">
+                                        <!-- FILTRO CON TIPOLOGIA DI CLASSE -->
+                                        <div class="form-group">
                                             <select class="form-control" onchange="filterType(this)">
-                                                <option value="0">All</option>
+                                                <option value="0">All Class</option>
                                                 <?php
-                                                $sql = "SELECT * FROM armor_type";
+                                                // Query per ottenere tutte le classi
+                                                $sql = "SELECT * FROM class";
                                                 $result_select = $link->query($sql);
+
+                                                // Se ci sono risultati, li mostro all'interno della select
                                                 if ($result_select->num_rows > 0) {
                                                     while ($row_select = $result_select->fetch_assoc()) {
-                                                        echo "<option value='" . $row_select["nome"] . "'>" . $row_select["nome"] . "</option>";
+                                                        echo "<option value='" . $row_select["name"] . "'>" . $row_select["name"] . "</option>";
                                                     }
                                                 } else {
+                                                    // Se non ci sono risultati, mostro un'opzione "0 results"
                                                     echo "<option value='0'>0 results</option>";
                                                 }
                                                 ?>
                                             </select>
                                         </div>
-
                                     </div>
+
+
+
+
+
                                 </div>
                             </div>
                             <table id="ecommerce-list" class="table dt-table-hover" style="width:100%">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Item Bonus</th>
-                                    <th>Bulk</th>
-                                    <th>Armor Type</th>
-                                    <th>Armor Traits</th>
-
-
+                                    <th>Class</th>
+                                    <th>Description</th>
+                                    <th>Cost</th>
+                                    <th>Range</th>
+                                    <th>Requisite</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
-                                        echo "<td>" . ($row["name"]) . "</td>";
-                                        echo "<td>" . ($row["price"]) . "</td>";
-                                        echo "<td>" . ($row["item_bonus"]) . "</td>";
-                                        echo "<td>" . ($row["bulk"]) . "</td>";
-                                        echo "<td>" . ($row["armor_type"]) . "</td>";
-
-                                        //explode weapon_traits in array
-                                        echo "<td>";
-                                        if ($row["armor_traits"] != null) {
-                                            $armor_traits = explode(", ", $row["armor_traits"]);
-                                            $traits_descriptions = explode(", ", $row["traits_description"]); // Splittare le descrizioni per ogni tratto
-
-                                            foreach ($armor_traits as $index => $trait) {
-                                                // Controllo se esiste una descrizione corrispondente, altrimenti "No description"
-                                                $trait_description = isset($traits_descriptions[$index]) ? $traits_descriptions[$index] : "No description";
-
-                                                echo '<a class="bs-popover" data-bs-container="body" data-bs-trigger="hover" data-bs-content="' . $trait_description . '" data-bs-placement="top" data-bs-toggle="popover" title="">' . $trait . '</a>, ';
-                                            }
+                                        $description = $row["description"];
+                                        if (strlen($description) > 100) {
+                                            $description = substr($description, 0, 100) . "</br>";
                                         }
-                                        echo "</td>";
 
 
+
+                                        echo "<tr>";
+                                        echo "<td>" . $row["name"] . "</td>";
+                                        echo "<td>" . $row["name_class"] . "</td>";
+                                        echo "<td>" . $description . "</td>";
+                                        echo "<td>" . $row["cost"] . "</td>";
+                                        echo "<td>" . $row["range_class"] . "</td>";
+                                        echo "<td>" . $row["requisite"] . "</td>";
 
 
 
 
                                         echo "</tr>";
+
+
+
                                     }
                                 } else {
                                     echo "<tr><td colspan='8'>0 results</td></tr>";
@@ -201,6 +183,7 @@ $result = $link->query($sql);
 </div>
 <!-- END MAIN CONTAINER -->
 
+
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <script src="../src/plugins/src/global/vendors.min.js"></script>
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -216,7 +199,8 @@ $result = $link->query($sql);
 <script>
     ecommerceList = $('#ecommerce-list').DataTable({
 
-        "order": [[ 2, "asc" ]],
+
+        "order": [[ 1, "asc" ]],
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l>" +
             "<'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
@@ -237,18 +221,22 @@ $result = $link->query($sql);
     multiCheck(ecommerceList);
 
     function filterType(type) {
-        //prendo il testo della select
-        var type_id = type.value;
-        //se il valore è 0 allora mostro tutti gli elementi
-        if (type_id == 0) {
-            ecommerceList.columns(4).search('').draw();
+        var className = type.value;
+        if (className === '0') {
+            ecommerceList.columns(1).search('').draw();
         } else {
-            ecommerceList.columns(4).search(type_id).draw();
+            ecommerceList.columns(1).search(className).draw();
         }
-
     }
 
+
+
+
 </script>
+
+
+
+
 
 </body>
 </html>

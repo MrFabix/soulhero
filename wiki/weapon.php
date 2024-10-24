@@ -119,7 +119,6 @@ $result = $link->query($sql);
                             <table id="ecommerce-list" class="table dt-table-hover" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th class="checkbox-column"></th>
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Damage</th>
@@ -130,7 +129,6 @@ $result = $link->query($sql);
                                     <th>Capacity</th>
                                     <th>Misfire</th>
                                     <th>Traits</th>
-                                    <th class="no-content text-center">Action</th>
 
                                 </tr>
                                 </thead>
@@ -139,7 +137,6 @@ $result = $link->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
-                                        echo "<td></td>";
                                         echo "<td>" . ($row["name"]) . "</td>";
                                         echo "<td>" . ($row["price"]) . "</td>";
                                         echo "<td>" . ($row["damage"]) . "</td>";
@@ -152,41 +149,28 @@ $result = $link->query($sql);
                                         //explode weapon_traits in array
                                         echo "<td>";
                                         if ($row["weapon_traits"] != null) {
+                                            // Dividi i tratti e le descrizioni in array separati
                                             $weapon_traits = explode(", ", $row["weapon_traits"]);
-                                            if ($row["traits_description"] != null) {
-                                                $trait_description =  ($row["traits_description"]);
-                                            }else{
-                                                $trait_description = "No description";
-                                            }
-                                        }
-                                        foreach ($weapon_traits as $trait) {
+                                            $traits_descriptions = explode(", ", $row["traits_description"]); // Descrizioni dei tratti
 
-                                            echo '<a class="bs-popover " data-bs-container="body" data-bs-trigger="hover" data-bs-content="' .$trait_description . '" data-bs-placement="top" data-bs-toggle="popover" data-original-title="" title="">' . $trait . ' </a>,';
+                                            // Cicla attraverso i tratti e le descrizioni
+                                            foreach ($weapon_traits as $index => $trait) {
+                                                // Verifica se esiste una descrizione corrispondente per il tratto
+                                                $trait_description = isset($traits_descriptions[$index]) ? $traits_descriptions[$index] : "No description";
+
+                                                // Stampa il tratto come link con popover contenente la descrizione
+                                                echo '<a class="bs-popover" data-bs-container="body" data-bs-trigger="hover" data-bs-content="' . $trait_description . '" data-bs-placement="top" data-bs-toggle="popover" title="">' . $trait . '</a>, ';
+                                            }
                                         }
                                         echo "</td>";
 
 
 
 
-                                        echo "<td class='text-center'>
-                                                <div class='dropdown'>
-                                                    <a class='dropdown-toggle' href='#' role='button' id='dropdownMenuLink1' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>
-                                                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-more-horizontal'>
-                                                            <circle cx='12' cy='12' r='1'></circle>
-                                                            <circle cx='19' cy='12' r='1'></circle>
-                                                            <circle cx='5' cy='12' r='1'></circle>
-                                                        </svg>
-                                                    </a>
-                                                    <div class='dropdown-menu' aria-labelledby='dropdownMenuLink1'>
-                                                        <a class='dropdown-item' href='#' onclick='editWeapon(" . $row['id'] . ")'>Edit</a>
-                                                        <a class='dropdown-item' href='#' onclick='deleteWeapon(" . $row['id'] . ")'>Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td>";
                                         echo "</tr>";
                                     }
                                 } else {
-                                    echo "<tr><td colspan='8'>0 results</td></tr>";
+                                    echo "<tr><td colspan='10'>0 results</td></tr>";
                                 }
                                 ?>
 
@@ -214,124 +198,7 @@ $result = $link->query($sql);
 </div>
 <!-- END MAIN CONTAINER -->
 <!-- Modal for Add/Edit Weapon -->
-<div class="modal fade" id="weaponModal" tabindex="-1" aria-labelledby="weaponModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="weaponForm">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="weaponModalLabel">Add Weapon</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="weaponId" name="weaponId">
-                    <div class="mb-3">
-                        <label for="weaponName" class="form-label">Weapon Name</label>
-                        <input type="text" class="form-control" id="weaponName" name="weaponName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="weaponType" class="form-label">Weapon Type</label>
-                        <select class="form-select" id="weaponType" name="weaponType" required>
-                            <option value="">Select Weapon Type</option>
-                            <?php
-                            $sql = "SELECT * FROM weapon_type";
-                            $result = $link->query($sql);
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
-                                }
-                            } else {
-                                echo "<option value=''>0 results</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="weaponPrice" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="weaponPrice" name="weaponPrice" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="weaponDamage" class="form-label">Damage</label>
-                        <input type="text" class="form-control" id="weaponDamage" name="weaponDamage" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="weaponBulk" class="form-label">Bulk</label>
-                        <input type="text" class="form-control" id="weaponBulk" name="weaponBulk" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="weaponRange" class="form-label">Range</label>
-                        <input type="text" class="form-control" id="weaponRange" name="weaponRange" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="weaponReload" class="form-label">Reload</label>
-                        <input type="text" class="form-control" id="weaponReload" name="weaponReload" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="weaponCapacity" class="form-label">Capacity</label>
-                        <input type="text" class="form-control" id="weaponCapacity" name="weaponCapacity" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="weaponMisfire" class="form-label">Misfire</label>
-                        <input type="text" class="form-control" id="weaponMisfire" name="weaponMisfire" required>
-                    </div>
-
-                    <!-- Multi select with traits -->
-                    <div class="mb-3">
-                        <label for="weaponTraits" class="form-label">Traits</label>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th></th>
-                                <th>Weapon Traits</th>
-                                <th>Value</th>
-                            </tr>
-                            <?php
-                            $sql = "SELECT * FROM weapon_traits";
-                            $result = $link->query($sql);
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td><input type='checkbox' name='weaponTraits[]' value='" . $row["id"] . "'></td>";
-                                    echo "<td>" . $row["name"] . "</td>";
-                                    echo "<td><input type='text' name='weaponTraitValues[" . $row["id"] . "]'></td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<option value=''>0 results</option>";
-                            }
-                            ?>
-                        </table>
-                    </div>
-
-                    <div id="traitsValuesContainer"></div>
-
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveWeaponBtn">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Delete Confirmation -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this weapon?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
+<
 
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <script src="../src/plugins/src/global/vendors.min.js"></script>
@@ -347,21 +214,8 @@ $result = $link->query($sql);
 <script src="../src/plugins/src/table/datatable/datatables.js"></script>
 <script>
     ecommerceList = $('#ecommerce-list').DataTable({
-        headerCallback:function(e, a, t, n, s) {
-            e.getElementsByTagName("th")[0].innerHTML=`
-                <div class="form-check form-check-primary d-block new-control">
-                    <input class="form-check-input chk-parent" type="checkbox" id="form-check-default">
-                </div>`
-        },
-        columnDefs:[ {
-            targets:0, width:"30px", className:"", orderable:!1, render:function(e, a, t, n) {
-                return `
-                    <div class="form-check form-check-primary d-block new-control">
-                        <input class="form-check-input child-chk" type="checkbox" id="form-check-default">
-                    </div>`
-            }
-        }],
-        "order": [[ 2, "asc" ]],
+
+        "order": [[ 1, "asc" ]],
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l>" +
             "<'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
@@ -386,9 +240,9 @@ $result = $link->query($sql);
         var type_id = type.value;
         //se il valore è 0 allora mostro tutti gli elementi
         if (type_id == 0) {
-            ecommerceList.columns(5).search('').draw();
+            ecommerceList.columns(4).search('').draw();
         } else {
-            ecommerceList.columns(5).search(type_id).draw();
+            ecommerceList.columns(4).search(type_id).draw();
         }
 
     }

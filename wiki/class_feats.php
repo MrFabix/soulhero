@@ -86,11 +86,11 @@ $result = $link->query($sql);
                         <div class="widget-content widget-content-area br-8">
                             <div class="table-form">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12">
+                                    <div class="col-sm-12 col-md-6">
                                         <!-- FILTRO CON TIPOLOGIA DI CLASSE -->
                                         <div class="form-group">
                                             <select class="form-control" onchange="filterType(this)">
-                                                <option value="0">All</option>
+                                                <option value="0">All Class</option>
                                                 <?php
                                                 // Query per ottenere tutte le classi
                                                 $sql = "SELECT * FROM class";
@@ -106,6 +106,18 @@ $result = $link->query($sql);
                                                     echo "<option value='0'>0 results</option>";
                                                 }
                                                 ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <select class="form-control" onchange="filterLevel(this)">
+                                                <option value=0>All Level</option>
+                                                <option value=1>1</option>
+                                                <option value="3">3</option>
+                                                <option value="5">5</option>
+                                                <option value="7">7</option>
+                                                <option value="9">9</option>
                                             </select>
                                         </div>
                                     </div>
@@ -219,6 +231,16 @@ $result = $link->query($sql);
             ecommerceList.columns(3).search('').draw();
         } else {
             ecommerceList.columns(3).search(className).draw();
+        }
+    }
+
+    function filterLevel(level) {
+        var levelValue = level.value
+        console.log(levelValue);
+        if (levelValue === '0') {
+            ecommerceList.columns(1).search('').draw();
+        } else {
+            ecommerceList.columns(1).search(levelValue).draw();
         }
     }
 

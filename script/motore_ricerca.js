@@ -12,26 +12,33 @@ function search(query) {
         type: 'POST', // Cambia a POST se stai inviando dati
         data: { query: query },
         dataType: 'json', // Assicurati di specificare il tipo di dati attesi
+        beforeSend: function() {
+            // Optionally add a loading indicator
+            $('#search-results').html('<li>Loading...</li>');
+        },
         success: function(data) {
-            console.log('Search results:', data.results[0].hits);
-            //mi calcolo il numero di risultati
-            var numResults = data.results[0].nbHits;
+            console.log( data);
+            // Mostra i risultati
 
-            // Stampo i risultati<
-            $('#search-results').empty()
-            //ul search-results
-            for (var i = 0; i < numResults; i++) {
-                var hit = data.results[0].hits[i];
-                //li search-results
-                $('#search-results').append('<li>' + hit.name  +" "+ hit.id + '</li>');
+            $('#search-results').html('');
+            for (var i = 0; i < data.results.length; i++) {
+                for (var j = 0; j < data.results[i].hits.length; j++) {
+                    //scorro gli elementi dell array hits
+                    var hit = data.results[i].hits[j];
+                    //elemento hit
+                    $('#search-results').append('<li><a href="' + hit.id + '">' + hit.name + '</a></li>');
+                }
             }
+
 
 
         },
         error: function(error) {
             console.error('Error fetching search results:', error);
+            $('#search-results').html('<li>An error occurred while fetching results.</li>');
         }
     });
+
 }
 
 //prendo in get il parametro query
