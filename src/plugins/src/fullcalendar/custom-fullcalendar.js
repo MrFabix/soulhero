@@ -47,41 +47,54 @@ document.addEventListener('DOMContentLoaded', function() {
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     }
+    // Calcola il prossimo lunedì
+    let dayOfWeek = newDate.getDay();
+    let diffToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek; // Se è domenica, sottrae 6 giorni
+    newDate.setDate(newDate.getDate() + diffToMonday);
+
+    function getDateForDay(dayOffset) {
+        let date = new Date(newDate);
+        date.setDate(newDate.getDate() + dayOffset);
+        let month = String(date.getMonth() + 1).padStart(2, '0'); // Mese con zero iniziale
+        let day = String(date.getDate()).padStart(2, '0'); // Giorno con zero iniziale
+        return `${date.getFullYear()}-${month}-${day}`;
+    }
+
     var calendarEventsList = [
-        //ogni Lunedi
+        // Ogni Lunedì
         {
             id: '1',
-            title: 'Goldgun GANG',
-            start: `${newDate.getFullYear()}-${getDynamicMonth()}-07T00:00:00`,
-            end: `${newDate.getFullYear()}-${getDynamicMonth()}-07T23:59:59`,
+            title: 'Gold Gun GANG',
+            start: `${getDateForDay(0)}`,
+            end: `${getDateForDay(0)}`,
         },
-        //ogni Martedi
+        // Ogni Martedì
         {
             id: '2',
             title: 'Lucky Last Loot',
             color: 'red',
-            start: `${newDate.getFullYear()}-${getDynamicMonth()}-08T00:00:00`,
-            end: `${newDate.getFullYear()}-${getDynamicMonth()}-08T23:59:59`,
+            start: `${getDateForDay(1)}`,
+            end: `${getDateForDay(1)}`,
         },
-        //ogni Mercoledi
+        // Ogni Mercoledì
         {
             id: '3',
             title: 'Classic Caotic Crew',
-            color: 'yellow',
-            start: `${newDate.getFullYear()}-${getDynamicMonth()}-09T00:00:00`,
-            end: `${newDate.getFullYear()}-${getDynamicMonth()}-09T23:59:59`,
+            color: 'blue',
+            start: `${getDateForDay(2)}`,
+            end: `${getDateForDay(2)}`,
         },
         {
-            id: '3',
+            id: '4',
             title: 'Heresy Heroes',
-            color: 'gereen',
-            start: `${newDate.getFullYear()}-${getDynamicMonth()}-09T00:00:00`,
-            end: `${newDate.getFullYear()}-${getDynamicMonth()}-09T23:59:59`,
+            color: 'green',
+            start: `${getDateForDay(2)}`,
+            end: `${getDateForDay(2)}`,
         },
+    ];
 
 
-    ]
-    
+
     // Calendar Select fn.
     var calendarSelect = function(info) {
         getModalAddBtnEl.style.display = 'block';
