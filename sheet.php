@@ -51,14 +51,20 @@
     <div id="content" class="main-content">
         <div class="layout-px-spacing">
             <div class="middle-content container-xxl p-0">
+
                 <div class="row layout-top-spacing">
                     <div class="widget-content widget-content-area br-8">
                         <!-- Character Image and Stats -->
+
                         <div class="row">
+
                             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 layout-spacing">
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex">
+
                                         <div class="mr-3">
+
+
                                             <img alt="avatar" src="../src/assets/img/profile-30.png" class="rounded-circle">
                                         </div>
                                     </div>
@@ -68,7 +74,7 @@
                                 <div class="d-flex justify-content-between">
                                     <!-- Stats Cards -->
                                     <?php for ($i = 0; $i < 5; $i++): ?>
-                                        <div class="card text-white" style="background-image: url('src/assets/svg/card.svg'); background-size: cover; background-position: center; width: 8%">
+                                        <div class="card ca text-white" style="background-image: url('src/assets/svg/card.svg'); background-size: cover; background-position: center; width: 8%">
                                             <div class="card-header text-center">
                                                 <p class="card-title text-secondary">Soul</p>
                                             </div>
@@ -104,10 +110,14 @@
 
 
 <!-- Global Mandatory Scripts -->
-<script src="../src/assets/js/loader.js"></script>
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../src/plugins/src/apex/apexcharts.min.js"></script>
-<script src="../src/assets/js/dashboard/dash_1.js"></script>
+<script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
+<script src="../src/plugins/src/waves/waves.min.js"></script>
+<script src="../layouts/modern-dark-menu/app.js"></script>
+<!-- END GLOBAL MANDATORY SCRIPTS -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 </body>
 
 </html>

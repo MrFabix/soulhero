@@ -27,6 +27,10 @@ $searchResponse = $client->search(
         ['indexName' => 'dev_WEAPON',
             'query' =>  $query,
             ],
+        ['indexName' => 'dev_ArcanaRunes',
+            'query' =>  $query,
+        ],
+
 
     ],
 
