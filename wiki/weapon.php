@@ -10,7 +10,15 @@ $sql = "SELECT weapons.id, weapons.name, weapons.price, weapons.damage, weapons.
         GROUP BY weapons.id";
 
 $result = $link->query($sql);
+if (isset($_GET["id"])) {
+    $id_search = $_GET["id"];
+    //porto l'utente della riga con quell'id
 
+
+
+
+
+}
 
 ?>
 
@@ -136,7 +144,7 @@ $result = $link->query($sql);
                                 <?php
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
+                                        echo "<tr id='row-" . $row["id"] . "' data-id='" . $row["id"] . "'>";
                                         echo "<td>" . ($row["name"]) . "</td>";
                                         echo "<td>" . ($row["price"]) . "</td>";
                                         echo "<td>" . ($row["damage"]) . "</td>";
@@ -246,6 +254,24 @@ $result = $link->query($sql);
         }
 
     }
+        document.addEventListener("DOMContentLoaded", function() {
+        // Recupera l'ID dalla query string
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        if (id) {
+        // Trova la riga corrispondente con l'attributo data-id
+        const targetRow = document.querySelector(`tr[data-id='${id}']`);
+        if (targetRow) {
+        // Scorri fino alla riga
+        targetRow.scrollIntoView({ behavior: "smooth", block: "center" });
+        // Opzionalmente, evidenzia la riga
+        targetRow.style.backgroundColor = "#fff993";  // Colore di evidenziazione temporaneo
+        setTimeout(() => targetRow.style.backgroundColor = "", 2000); // Rimuove l'evidenziazione dopo 2 secondi
+    }
+    }
+    });
+
 
 
 

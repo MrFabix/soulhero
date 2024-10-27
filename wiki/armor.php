@@ -22,6 +22,8 @@ LEFT JOIN armor_traits ON armor_armor_traits.fk_armor_traits = armor_traits.id
 GROUP BY armor.id;
 ";
 $result = $link->query($sql);
+//controllo se è settato in get ID
+
 
 
 ?>
@@ -143,7 +145,7 @@ $result = $link->query($sql);
                                 <?php
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
+                                        echo "<tr id='row-" . $row["id"] . "' data-id='" . $row["id"] . "'>";
                                         echo "<td>" . ($row["name"]) . "</td>";
                                         echo "<td>" . ($row["price"]) . "</td>";
                                         echo "<td>" . ($row["item_bonus"]) . "</td>";
@@ -247,6 +249,7 @@ $result = $link->query($sql);
         }
 
     }
+
 
 </script>
 
