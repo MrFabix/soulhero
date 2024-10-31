@@ -28,9 +28,7 @@ $result = $link->query($sql);
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="../src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="../src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
-    <link href="../src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
 </head>
@@ -85,6 +83,12 @@ $result = $link->query($sql);
                     <?php
                     if ($result && mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
+                            $description = $row['description'];
+                            //se troppo lungo taglia la stringa
+                            if (strlen($description) > 100) {
+                                $description_short = substr($description, 0, 100) . "...";
+                            }
+
                             ?>
                             <div class="col-xl-3 col-lg-4 col-md-6 mb-4 isotope-item">
                                 <div class="card">
@@ -98,10 +102,15 @@ $result = $link->query($sql);
                                     <div class="card-body">
                                         <p><span class="text-warning">Time:</span> <?php echo $row['time_cast']; ?></p>
                                         <p><span class="text-warning">Components:</span> <?php echo $row['components']; ?></p>
-                                        <p><span class="text-warning">Diffiuclty: </span><?php echo $row['difficulty']; ?></p>
+                                        <p><span class="text-warning">Difficulty: </span><?php echo $row['difficulty']; ?></p>
                                         <p><span class="text-warning">Mana :</span> <?php echo $row['mana']; ?></p>
-                                        <p><span class="text-warning"> Description:</span> <?php echo $row['description']; ?></p>
 
+                                        <!-- Descrizione con opzione espandibile -->
+                                        <p><span class="text-warning">Description:</span>
+                                            <span class="short-description"><?php echo htmlspecialchars($description_short); ?></span>
+                                            <span class="full-description d-none"><?php echo htmlspecialchars($description); ?></span>
+                                            <button class="btn  btn-link p-0 toggle-description">More</button>
+                                        </p>
                                     </div>
                                     <div class="card-footer">
                                         <?php
@@ -168,8 +177,7 @@ $result = $link->query($sql);
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="../src/plugins/src/apex/apexcharts.min.js"></script>
-<script src="../src/assets/js/dashboard/dash_1.js"></script>
+
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 <script>
@@ -192,13 +200,25 @@ $result = $link->query($sql);
         });
     });
 
-    // Ordinamento
-    var sortBySelect = document.querySelector('.form-select[aria-label="Sort By"]');
-    sortBySelect.addEventListener('change', function() {
-        var sortByValue = sortBySelect.value;
 
-        iso.arrange({
-            sortBy: sortByValue
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".toggle-description").forEach(button => {
+            button.addEventListener("click", function() {
+                const cardBody = this.closest(".card-body");
+                const shortDesc = cardBody.querySelector(".short-description");
+                const fullDesc = cardBody.querySelector(".full-description");
+
+                // Toggle visibility
+                if (fullDesc.classList.contains("d-none")) {
+                    shortDesc.classList.add("d-none");
+                    fullDesc.classList.remove("d-none");
+                    this.textContent = "Mostra di meno";
+                } else {
+                    shortDesc.classList.remove("d-none");
+                    fullDesc.classList.add("d-none");
+                    this.textContent = "Mostra di più";
+                }
+            });
         });
     });
 </script>

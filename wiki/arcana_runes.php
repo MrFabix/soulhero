@@ -4,7 +4,9 @@ include '../include/config.php';
 $sql = "SELECT arcane_runes.*, arcane_rune_type.nome as type FROM arcane_runes join arcane_rune_type on arcane_runes.fk_type = arcane_rune_type.id";
 $result = $link->query($sql);
 
-
+if (isset($_GET["id"])) {
+    $id_search = $_GET["id"];
+}
 
 ?>
 
@@ -121,7 +123,7 @@ $result = $link->query($sql);
                                 <?php
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
+                                        echo "<tr data-id='" . $row["id"] . "'>";
                                         echo "<td>" . ($row["name"]) . "</td>";
                                         echo "<td>" . ($row["type"]) . "</td>";
                                             echo "<td>" . ($row["mana_cost"]) . "</td>";
@@ -170,6 +172,9 @@ $result = $link->query($sql);
 <script src="../src/plugins/src/waves/waves.min.js"></script>
 <script src="../layouts/modern-dark-menu/app.js"></script>
 <script src="../src/assets/js/custom.js"></script>
+<script src="../src/plugins/src/jquery/jquery-3.6.0.min.js"></script>
+<script src="../src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
+
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
@@ -208,6 +213,28 @@ $result = $link->query($sql);
         }
 
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Recupera l'ID dalla query string
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        if (id) {
+            // Trova la riga corrispondente con l'attributo data-id
+            const targetRow = document.querySelector(`tr[data-id='${id}']`);
+            if (targetRow) {
+                // Scorri fino alla riga
+                targetRow.scrollIntoView({ behavior: "smooth", block: "center" });
+                // Aggiungo una classe alla targetRow
+                targetRow.classList.add( "border-warning" , "border");
+                //aggiungo un effeto di shake con jqueryUI
+                $(targetRow).effect("shake", { times: 2 }, 1000);
+
+            }
+
+
+        }
+    });
 
 </script>
 

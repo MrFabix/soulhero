@@ -53,7 +53,13 @@ if (isset($_GET["id"])) {
             cursor: pointer;
             text-decoration: underline;
             }
+
+        .highlight {
+            border: 2px solid #f00;
+            background-color: #f00;
+        }
     </style>
+
 
 
 </head>
@@ -239,9 +245,11 @@ if (isset($_GET["id"])) {
 
         "stripeClasses": [],
         "lengthMenu": [7, 10, 20, 50],
-        "pageLength": 50
+        "pageLength": 100
     });
-    multiCheck(ecommerceList);
+    $(document).ready(function () {
+        $('[data-bs-toggle="popover"]').popover();
+    });
 
     function filterType(type) {
         //prendo il testo della select
@@ -265,10 +273,11 @@ if (isset($_GET["id"])) {
         if (targetRow) {
         // Scorri fino alla riga
         targetRow.scrollIntoView({ behavior: "smooth", block: "center" });
-        // Opzionalmente, evidenzia la riga
-        targetRow.style.backgroundColor = "#fff993";  // Colore di evidenziazione temporaneo
-        setTimeout(() => targetRow.style.backgroundColor = "", 2000); // Rimuove l'evidenziazione dopo 2 secondi
-    }
+        // Aggiungo una classe alla targetRow
+        targetRow.classList.add("border", "border-warning");
+        }
+
+
     }
     });
 

@@ -688,7 +688,7 @@ if ($range_ability != '' && $range_ability != 0) {
 
                                 <hr>
                                 <div class="">
-                                    <h4 class="text-primary"><?php echo $name_class ?> 's Core Abilities</h4>
+                                    <h4 class="text-primary"><?php echo $name_class ?> 's Ultimate Abilities</h4>
 
                                     <div class="table-responsive">
                                         <table id="core-ability" class="table table-striped table-bordered">
@@ -704,7 +704,7 @@ if ($range_ability != '' && $range_ability != 0) {
                                             </thead>
                                             <tbody>
                                             <?php
-                                            $sql = "SELECT * FROM class_core_abilities WHERE fk_class = $id_class";
+                                            $sql = "SELECT * FROM class_ultimate WHERE fk_class = $id_class";
                                             $result = $link->query($sql);
                                             while ($row = $result->fetch_assoc()) {
                                                 $name = $row['name'];

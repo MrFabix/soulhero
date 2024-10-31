@@ -31,16 +31,20 @@ function search(query) {
                     indexName = indexName.replace(/.*?_/, '');
                     //switch per sostituire i nomi degli indici con i nomi delle tabelle
                     switch (indexName) {
+                        case 'CLASS': url = 'class.php'; break;
                         case 'WEAPON': url = 'weapon.php'; break;
                         case 'ARMOR': url = 'armor.php'; break;
                         case 'GEAR': url = 'gear_common_items.php'; break;
+                        case 'SPECIES': url = 'species.php'; break;
+                        case 'ROLE': url = 'role.php'; break;
                         case 'ArcanaRunes': url = 'arcana_runes.php'; break;
-                        case 'CLASS': url = 'class.php'; break;
                         case 'RITUALS': url = 'rituals.php'; break;
                         case 'GenearlFeats': url = 'general_feats.php'; break;
                         case 'ClassFeats': url = 'class_feats.php'; break;
                         case 'CoreAbilities': url = 'core_abilities.php'; break;
-                        case 'UltimateAbilities': url = 'core_abilities.php'; break;
+                        case 'UltimateAbilities': url = 'ultimate_abilities.php'; break;
+                        case 'SHIELD': url = 'shield.php'; break;
+                        case 'SecondaryAbilities': url = 'secondary_abilities.php'; break;
                     }
 
 

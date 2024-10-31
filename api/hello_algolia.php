@@ -21,9 +21,9 @@ $strategy="stopIfEnoughMatches";
 // Search for 'test'
 $searchResponse = $client->search(
     ['requests' => [
-        ['indexName' => 'dev_CLASS',
-            'query' =>  $query,
-        ],
+//        ['indexName' => 'dev_CLASS',
+//            'query' =>  $query,
+//        ],
         ['indexName' => 'dev_WEAPON',
             'query' =>  $query,
             ],

@@ -6,7 +6,6 @@ $sql="SELECT
     armor.id,
     armor.name,
     armor.price,
-    armor.barrier,
     armor.bulk,
     armor_type.nome AS armor_type,
  GROUP_CONCAT(DISTINCT 
@@ -101,8 +100,7 @@ $result = $link->query($sql);
 
                 <div class="row layout-top-spacing">
 
-
-                    <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                         <div class="widget-content widget-content-area br-8">
                             <div class="table-form">
                                 <div class="row">
