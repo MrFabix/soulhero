@@ -226,6 +226,8 @@ if (isset($_GET["id"])) {
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="../src/plugins/src/table/datatable/datatables.js"></script>
+<script src="../src/plugins/src/jquery/jquery-3.6.0.min.js"></script>
+<script src="../src/plugins/src/jquery-ui/jquery-ui.min.js"></script>
 <script>
     ecommerceList = $('#ecommerce-list').DataTable({
 
@@ -275,6 +277,8 @@ if (isset($_GET["id"])) {
         targetRow.scrollIntoView({ behavior: "smooth", block: "center" });
         // Aggiungo una classe alla targetRow
         targetRow.classList.add("border", "border-warning");
+        $(targetRow).effect("shake", { times: 2 }, 1000);
+
         }
 
 

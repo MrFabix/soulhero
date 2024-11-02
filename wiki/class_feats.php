@@ -144,7 +144,8 @@ $result = $link->query($sql);
                                     while ($row = $result->fetch_assoc()) {
                                         $description = $row["description"];
                                         if (strlen($description) > 100) {
-                                            $description = substr($description, 0, 100) . "</br>";
+                                            $description = wordwrap($description, 100, "<br>");
+s
                                         }
 
 

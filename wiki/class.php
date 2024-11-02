@@ -48,8 +48,8 @@ if ($result_skill_boost->num_rows > 1) {
         }
 
     }else{
-        $name_skill = $row_skill_boost['name'];
-        $value_skill = $row_skill_boost['value'];
+        $name_skill = $row_skill_boost['name'] ?? '';
+        $value_skill = $row_skill_boost['value'] ?? '';
     }
 
 
