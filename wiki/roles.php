@@ -80,23 +80,8 @@
                         <input id="t-text" type="text" name="txt" placeholder="Search" class="form-control" required="">
                     </div>
 
-                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 mb-4 ms-auto">
-                        <select class="form-select form-select" aria-label="Default select example">
-                            <option selected="">All Category</option>
-                            <option value="3">Wordpress</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Themeforest</option>
-                            <option value="3">Travel</option>
-                        </select>
-                    </div>
 
-                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 mb-4">
-                        <select class="form-select form-select" aria-label="Default select example">
-                            <option selected="">Sort By</option>
-                            <option value="1">Recent</option>
-                            <option value="2">Most Upvoted</option>
-                        </select>
-                    </div>
+
                 </div>
 
                 <div class="row" id="roles-grid">

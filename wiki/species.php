@@ -1,7 +1,8 @@
 <?php
 include '../include/config.php';
 //query pre prendere tutti i roles
-$sql = "SELECT * FROM ancestries";
+$sql = "SELECT ancestries.* , skill.name as name_skill
+FROM ancestries JOIN skill on ancestries.fk_skill = skill.id";
 $result = $link->query($sql);
 
 
@@ -76,23 +77,7 @@ $result = $link->query($sql);
                         <input id="t-text" type="text" name="txt" placeholder="Search" class="form-control" required="">
                     </div>
 
-                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 mb-4 ms-auto">
-                        <select class="form-select form-select" aria-label="Default select example">
-                            <option selected="">All Category</option>
-                            <option value="3">Wordpress</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Themeforest</option>
-                            <option value="3">Travel</option>
-                        </select>
-                    </div>
 
-                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 mb-4">
-                        <select class="form-select form-select" aria-label="Default select example">
-                            <option selected="">Sort By</option>
-                            <option value="1">Recent</option>
-                            <option value="2">Most Upvoted</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="row" id="roles-grid">
@@ -102,13 +87,21 @@ $result = $link->query($sql);
                             ?>
                             <div class="col-xl-3 col-lg-4 col-md-6 mb-4 isotope-item">
                                 <div class="card style-2 mb-md-0 mb-4 role-card">
-                                    <img src="../src/assets/img/masonry-blog-style-4.jpeg" class="card-img-top" alt="...">
-                                    <div class="card-body px-0 pb-0">
-                                        <h5 class="card-title"><?php echo $row['nome_stirpe']; ?></h5>
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roleModal<?php echo $row['id_stirpe']; ?>">Details</button>
+                                    <img src="../src/assets/img/masonry-blog-style-4.jpeg" class="card-img-top" alt="Description of the image" />
+                                    <div class="card-header">
+                                        <h5 class="card-title text-warning"><?php echo $row['nome_stirpe']; ?></h5>
+                                        <p class="card-text text-secondary"><?php echo $row['descrizione']; ?></p>
+
+
+                                    </div>
+                                    <div class="card-body text-white">
+                                        <p class="text-primary">SPEED</p>
+                                        <p class="text-secondary"><?php echo $row['velocità']; ?></p>
                                     </div>
                                 </div>
                             </div>
+
+
                             <?php
                         }
                     } else {
