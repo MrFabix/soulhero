@@ -145,7 +145,7 @@ $result = $link->query($sql);
                                         $description = $row["description"];
                                         if (strlen($description) > 100) {
                                             $description = wordwrap($description, 100, "<br>");
-s
+
                                         }
 
 
