@@ -9,7 +9,7 @@ $species = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $species[] = [
-            'id' => $row['id'],
+            'id' => $row['id_stirpe'],
             'nome_stirpe' => $row['nome_stirpe'],
             'descrizione' => $row['descrizione']
         ];

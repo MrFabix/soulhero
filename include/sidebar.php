@@ -56,24 +56,26 @@
                 </a>
             </li>
 
-            <li class="menu">
-                <a href="/wiki/roles.php" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                        <span>Roles</span>
-                    </div>
-                </a>
-            </li>
+            <!--          <li class="menu">
+                          <a href="/wiki/roles.php" aria-expanded="false" class="dropdown-toggle">
+                              <div class="">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                  <span>Roles</span>
+                              </div>
+                          </a>
+                      </li>
+                      -->
 
-            <li class="menu">
-                <a href="/wiki/classes.php" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-droplet"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
-                        <span>Classes</span>
-                    </div>
-                </a>
-            </li>
-<!---->
+
+                      <li class="menu">
+                          <a href="/wiki/classes.php" aria-expanded="false" class="dropdown-toggle">
+                              <div class="">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-droplet"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                                  <span>Classes</span>
+                              </div>
+                          </a>
+                      </li>
+          <!---->
 <!--            <li class="menu" >-->
 <!--                <a href="#invoice" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" >-->
 <!--                    <div class="">-->
@@ -111,6 +113,10 @@
 
                     <li>
                         <a href="/wiki/arcana_runes.php"> Arcana Runes </a>
+                    </li>
+
+                    <li>
+                        <a href="/wiki/magic.php"> Magic </a>
                     </li>
 
 

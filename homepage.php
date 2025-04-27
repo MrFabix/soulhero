@@ -89,9 +89,25 @@
                                                         <img src="../src/assets/img/heart.png" alt="Tracker" width="50">
                                                     </div>
                                                 </div>
-                                                <h6>HP Tracker</h6>
-                                                <p>Tieni traccia della vita dei personaggi</p>
+                                                <h6>HP/MANA Tracker</h6>
+                                                <p>Tieni traccia della vita e mana dei personaggi</p>
                                                 <a href="/tools/tracker.php" class="btn btn-danger mt-2">Apri Tool</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- My CHARACTER -->
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
+                                        <div class="widget widget-card-one">
+                                            <div class="widget-content text-center">
+                                                <div class="media">
+                                                    <div class="w-img mx-auto mb-2">
+                                                        <img src="../src/assets/img/character.png" alt="My Character" width="50">
+                                                    </div>
+                                                </div>
+                                                <h6>My Character</h6>
+                                                <p>Gestisci il tuo personaggio</p>
+                                                <a href="/tools/character.php" class="btn btn-success mt-2">Apri Tool</a>
                                             </div>
                                         </div>
                                     </div>
