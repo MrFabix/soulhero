@@ -87,7 +87,15 @@
         <button class="btn btn-primary" id="nextBtn" onclick="nextPrev(1)">Avanti</button>
     </div>
 </div>
+<script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="../src/plugins/src/mousetrap/mousetrap.min.js"></script>
+<script src="../src/plugins/src/waves/waves.min.js"></script>
+<script src="../layouts/modern-dark-menu/app.js"></script>
 
+<!-- Page Level Scripts -->
+<script src="../src/plugins/src/apex/apexcharts.min.js"></script>
+<script src="../src/assets/js/dashboard/dash_1.js"></script>
 <script>
     let currentStep = 0;
     const steps = document.querySelectorAll('.step');
