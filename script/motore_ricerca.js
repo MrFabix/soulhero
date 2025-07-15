@@ -39,7 +39,7 @@ function search(query) {
                         case 'ROLE': url = 'role.php'; break;
                         case 'ArcanaRunes': url = 'arcana_runes.php'; break;
                         case 'RITUALS': url = 'rituals.php'; break;
-                        case 'GenearlFeats': url = 'general_feats.php'; break;
+                        case 'GeneralFeats': url = 'general_feats.php'; break;
                         case 'ClassFeats': url = 'class_feats.php'; break;
                         case 'CoreAbilities': url = 'core_abilities.php'; break;
                         case 'UltimateAbilities': url = 'ultimate_abilities.php'; break;
