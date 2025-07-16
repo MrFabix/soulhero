@@ -70,57 +70,32 @@
                                     </div>
                                 </div>
 
-<<<<<<< Updated upstream
-                                    <!-- HP TRACKER -->
-                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
-                                        <div class="widget widget-card-one">
-                                            <div class="widget-content text-center">
-                                                <div class="media">
-                                                    <div class="w-img mx-auto mb-2">
-                                                        <img src="../src/assets/img/heart.png" alt="Tracker" width="50">
-                                                    </div>
-                                                </div>
-                                                <h6>HP/MANA Tracker</h6>
-                                                <p>Tieni traccia della vita e mana dei personaggi</p>
-                                                <a href="/tools/tracker.php" class="btn btn-danger mt-2">Apri Tool</a>
-=======
-                                <!-- HP Tracker -->
+                                <!-- HP/MANA Tracker -->
                                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
                                     <div class="widget widget-card-one">
                                         <div class="widget-content text-center">
                                             <div class="w-img mx-auto mb-2">
                                                 <img src="../src/assets/img/heart.png" alt="HP Tracker" width="50">
->>>>>>> Stashed changes
                                             </div>
-                                            <h6>HP Tracker</h6>
-                                            <p>Tieni traccia dei punti ferita</p>
+                                            <h6>HP/MANA Tracker</h6>
+                                            <p>Tieni traccia della vita e mana dei personaggi</p>
                                             <a href="tools/tracker.php" class="btn btn-danger mt-2">Apri Tool</a>
                                         </div>
                                     </div>
-<<<<<<< Updated upstream
+                                </div>
 
-                                    <!-- My CHARACTER -->
-                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
-                                        <div class="widget widget-card-one">
-                                            <div class="widget-content text-center">
-                                                <div class="media">
-                                                    <div class="w-img mx-auto mb-2">
-                                                        <img src="../src/assets/img/character.png" alt="My Character" width="50">
-                                                    </div>
-                                                </div>
-                                                <h6>My Character</h6>
-                                                <p>Gestisci il tuo personaggio</p>
-                                                <a href="/tools/character.php" class="btn btn-success mt-2">Apri Tool</a>
+                                <!-- My Character -->
+                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
+                                    <div class="widget widget-card-one">
+                                        <div class="widget-content text-center">
+                                            <div class="w-img mx-auto mb-2">
+                                                <img src="../src/assets/img/character.png" alt="My Character" width="50">
                                             </div>
+                                            <h6>My Character</h6>
+                                            <p>Gestisci il tuo personaggio</p>
+                                            <a href="/tools/character.php" class="btn btn-success mt-2">Apri Tool</a>
                                         </div>
                                     </div>
-
-
-
-
-
-=======
->>>>>>> Stashed changes
                                 </div>
 
                                 <!-- Inventory Tool -->
@@ -147,6 +122,20 @@
                                             <h6>Libro Incantesimi</h6>
                                             <p>Consulta o prepara le magie conosciute</p>
                                             <a href="tools/spellbook.php" class="btn btn-info mt-2">Apri Tool</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Initiative Tracker -->
+                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
+                                    <div class="widget widget-card-one">
+                                        <div class="widget-content text-center">
+                                            <div class="w-img mx-auto mb-2">
+                                                <img src="../src/assets/img/dice.png" alt="Initiative Tracker" width="50">
+                                            </div>
+                                            <h6>Initiative Tracker</h6>
+                                            <p>Gestisci l'ordine dei turni</p>
+                                            <a href="tools/initiative.php" class="btn btn-secondary mt-2">Apri Tool</a>
                                         </div>
                                     </div>
                                 </div>
